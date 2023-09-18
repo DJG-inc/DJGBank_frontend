@@ -1,0 +1,54 @@
+/* input.css */
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+
+.storybook-input {
+    font-family: 'Goldman';
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    width: 250px;
+    border-bottom: 1px solid #B6E72B; /* Línea horizontal para todos los casos */
+  }
+  
+  .storybook-input.primary {
+    background-color: transparent;
+    border-bottom: none; /* Eliminamos la línea para los inputs primarios */
+    border: 2px solid #B6E72B;
+    border-radius: 0.5em;
+  }
+  
+  .storybook-input input {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    border: none;
+    flex: 1;
+    padding: 6px;
+    outline: none;
+    background-color: transparent;
+    margin-left: 8px; /* Separación entre el icono y el input */
+  }
+  
+  .storybook-input input::placeholder {
+    color: #767676;
+    font-family: 'Goldman';
+  }
+  
+  
+  .password-toggle {
+    background: none;
+    border: none; /* Eliminamos el borde */
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-icon {
+    width: 20px; /* Ajusta el tamaño de la imagen del botón */
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  

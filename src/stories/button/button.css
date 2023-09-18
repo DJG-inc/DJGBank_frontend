@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+
+.storybook-button {
+  font-family: 'Goldman';
+  font-weight: 700;
+  border: 0;
+  border-radius: 1em;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1;
+}
+.storybook-button--primary {
+  color: #191A15;
+  background-color: #B6E72B;
+}
+.storybook-button--secondary {
+  color: #B6E72B;
+  background-color: transparent;
+  box-shadow: rgba(182, 231, 43, 0.15) 0px 0px 0px 1px inset;
+  border: 1px solid #B6E72B;
+}
+
+.storybook-button--small {
+  font-size: 12px;
+  padding: 10px 16px;
+}
+.storybook-button--medium {
+  font-size: 14px;
+  padding: 11px 20px;
+}
+.storybook-button--large {
+  font-size: 16px;
+  padding: 9px 60px;
+  background-color: #1D1F15;
+  color: #B6E72B;
+  border-radius: 0.5em;
+
+}
+

@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+
+.storybook-navbar {
+  font-family: 'Goldman';
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 1.5%;
+}
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-right: 1.5%;
+}
+
+.logo img {
+  max-width: 130px; /* Cambia el valor según tus preferencias */
+}
+  
+.routes {
+  display: flex;
+  align-items: center;
+}
+  
+.route {
+  margin: 0 10px;
+  position: relative;
+  cursor: pointer;
+}
+  
+.route-text {
+  transition: color 0.2s;
+  color: #767676; /* Color original de las rutas */
+  /* Colocarle negrita al texto de las rutas */
+  font-weight: bold;
+  /* Cambiar el tamaño del texto de las rutas */
+  font-size: 1.2em;
+}
+  
+.route:hover .route-text {
+    color: #B6E72B; /* Cambia esto al color deseado al pasar el cursor */
+}
+  
+.route::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0; /* Inicialmente, la línea horizontal estará invisible */
+  height: 2px;
+  background-color: #B6E72B; /* Color deseado para el subrayado */
+  transition: width 0.2s;
+}
+  
+.route:hover::before {
+  width: 100%;
+}

@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+
+
+.register-container {
+    font-family: 'Goldman';
+    padding: 2rem; /* Agrega espacio interno al contenedor para crear un margen */
+    width: auto; /* Define el ancho del contenedor */
+    margin: 0 auto; /* Centra el contenedor horizontalmente en la pantalla */
+    /* Darle espacio entre que estan dentro  */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.register-container h2 {
+    font-size: 2rem; /* Aumenta el tamaño de la fuente del título */
+    font-weight: bold; /* Hace que el título sea negrita */
+    margin-bottom: 1rem; /* Agrega espacio debajo del título */
+    color: white;
+    text-align: center;
+}
+
+/* Hacer los inputs más alargados */
+.register-container Input {
+    width: 220%;
+}
