@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.svg";
 import { Button } from "../button/Button";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./header.css";  
 
-export const Header = ({ textButton, ...props }) => {
+export const Header = ({ textButton, route, ...props }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("EN"); // Estado para el idioma seleccionado
+
+  const navigate = useNavigate();
 
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
@@ -14,7 +17,7 @@ export const Header = ({ textButton, ...props }) => {
 
   return (
     <header>
-      <div className={`storybook-navbar ${props.primary ? "primary" : ""}`}>
+      <div className={`storybook-header ${props.primary ? "primary" : ""}`}>
         {/* Menú desplegable para seleccionar el idioma */}
         <div className="language-menu">
           <select
@@ -26,12 +29,12 @@ export const Header = ({ textButton, ...props }) => {
           </select>
         </div>
 
-        <div className="logo">
+        <div className="header-logo">
           <img src={logo} alt="Logo" />
         </div>
-
-        <div className="login">
-          <Button label={textButton} primary={true} size={"medium"} />
+ 
+        <div className="header-login">
+          <Button label={textButton} primary={true} size={"medium"} onClick={() => navigate(route)} />
         </div>
       </div>
     </header>
@@ -40,4 +43,5 @@ export const Header = ({ textButton, ...props }) => {
 
 Header.prototype = {
   textButton: PropTypes.string,
+  ruote: PropTypes.string,
 };

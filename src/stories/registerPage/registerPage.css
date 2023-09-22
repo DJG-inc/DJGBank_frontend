@@ -7,9 +7,9 @@ article {
   height: 100vh;
   background: #191A15;
 }
-
+ 
 /* Estilos para el encabezado (Header) */
-.header {
+.header-register {
   flex: 0; /* Ocupa el espacio mínimo necesario */
   padding: 20px; /* Añade espacio de relleno */
 }
@@ -23,6 +23,6 @@ article {
 }
 
 /* Estilos para hacer el registro más grande */
-.register {
+.register-page {
   width: 80%; /* Ajusta el ancho según tus necesidades */
 }

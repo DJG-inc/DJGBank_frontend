@@ -8,12 +8,12 @@ export const NavBar = ({ routes, ...props }) => {
   return (
     <div className={`storybook-navbar ${props.primary ? "primary" : ""}`}>
       {/* 1. Coloca el logo primero */}
-      <div className="logo">
+      <div className="navbar-logo">
         <img src={logo} alt="Logo" />
       </div>
 
       {/* 2. Centra las rutas horizontalmente */}
-      <div className="routes">
+      <div className="navbar-routes">
         {routes.map((route, index) => (
           <div className="route" key={index}>
             {/* 3. Aplica estilos de hover y subrayado */}
@@ -23,7 +23,7 @@ export const NavBar = ({ routes, ...props }) => {
       </div>
 
       {/* 4. Coloca el botón en la parte derecha */}
-      <div className="login">
+      <div className="navbar-login">
         <Button label="Login" primary={true} size={"medium"} />
       </div>
     </div>

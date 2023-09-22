@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
 
-.storybook-navbar {
+.storybook-header {
   font-family: 'Goldman';
   display: flex;
   align-items: center;
@@ -8,14 +8,14 @@
   border-bottom: 0.1px solid #505050;
 }
 
-.logo {
+.header-logo {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   margin-left: 1.5%;
 }
 
-.login {
+.header-login {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -23,7 +23,7 @@
 
 }
 
-.logo img {
+.header-logo img {
   max-width: 10em; /* Cambia el valor según tus preferencias */
 }
 
