@@ -4,20 +4,20 @@ import { Input } from "../input/Input";
 import { Button } from "../button/Button";
 
 export const Login = ({ text }) => {
-  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [idError, setIdError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const isEmailValid = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    const isValid = emailRegex.test(email);
+  const isIdValid = (id) => {
+    // Use this rregex "^[1-9][0-9]{7,9}$" to validate the id
+    const idRegex = /^[1-9][0-9]{7,9}$/;
+    const isValid = idRegex.test(id);
     if (!isValid) {
-      setEmailError("Correo electrónico no válido");
+      setIdError("El id debe contener entre 8 y 10 dígitos");
     } else {
-      setEmailError(""); // Borra el mensaje de error si es válido
+      setIdError(""); // Borra el mensaje de error si es válido
     }
-    return isValid;
   };
 
   const isPasswordValid = (password) => {
@@ -36,23 +36,26 @@ export const Login = ({ text }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const isEmailValidValue = isEmailValid(email);
-    const isPasswordValidValue = isPasswordValid(password);
+    // const isIdValidValue = isIdValid(id);
+    const isIdValidValue = true;
+    // const isPasswordValidValue = isPasswordValid(password);
+    const isPasswordValidValue = true;
 
-    if (isEmailValidValue && isPasswordValidValue) {
+    if (isIdValidValue && isPasswordValidValue) {
       // Lógica para iniciar sesión con el correo y la contraseña
       alert("Inicio de sesión exitoso");
     } else {
       // Muestra mensajes de error apropiados
-      if (!isEmailValidValue) {
-        setEmailError("Correo electrónico no válido");
-        console.log("Correo electrónico no válido");
+      if (!isIdValidValue) {
+        setIdError("Id no válido");
+        console.log("Id no válido");
       }
       if (!isPasswordValidValue) {
         setPasswordError("Contraseña no válida");
         console.log("Contraseña no válida");
       }
     }
+    alert("Inicio de sesión exitoso");
   };
 
   return (
@@ -61,11 +64,11 @@ export const Login = ({ text }) => {
         <h2>{text}</h2>
         <Input
           primary={true}
-          type="email"
-          placeholder="Enter your email"
+          type="username"
+          placeholder="Enter your id"
           onChange={(e) => {
-            setEmail(e.target.value);
-            setEmailError(""); // Borra el mensaje de error al editar el campo
+            setId(e.target.value);
+            setIdError(""); // Borra el mensaje de error al editar el campo
           }}
         />
         <Input

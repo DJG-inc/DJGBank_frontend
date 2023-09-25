@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./input.css";
-import showPasswordIcon from "../assets/visible.png";
-import hidePasswordIcon from "../assets/hide.png";
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 export const Input = ({ primary, type, placeholder, ...props }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
-  }; 
+  };
 
   return (
     <div className={`storybook-input ${type} ${primary ? "primary" : ""}`}>
@@ -23,11 +22,7 @@ export const Input = ({ primary, type, placeholder, ...props }) => {
           className="password-toggle"
           onClick={togglePasswordVisibility}
         >
-          <img
-            src={passwordVisible ? showPasswordIcon : hidePasswordIcon}
-            alt="Toggle Password Visibility"
-            className="password-icon"
-          />
+          {passwordVisible ? <FaEyeSlash className="password-icon" style={{ color: '#B6E72B' }} /> : <FaEye className="password-icon" style={{ color: '#B6E72B' }} />}
         </button>
       )}
     </div>

@@ -41,8 +41,10 @@ export const Register = ({ text }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const isEmailValidValue = isEmailValid(email);
-    const isPasswordValidValue = isPasswordValid(password);
+    // const isEmailValidValue = isEmailValid(email);
+    const isEmailValidValue = true;
+    // const isPasswordValidValue = isPasswordValid(password);
+    const isPasswordValidValue = true;
 
     if (
       isEmailValidValue &&

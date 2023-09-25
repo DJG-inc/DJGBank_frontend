@@ -18,7 +18,7 @@
   }
   
   .storybook-input input {
-    font-family: "Poppins", sans-serif;
+    font-family: "Goldman";
     font-size: 14px;
     border: none;
     flex: 1;
@@ -26,10 +26,17 @@
     outline: none;
     background-color: transparent;
     margin-left: 8px; /* Separación entre el icono y el input */
+    color: #cdcdcd; /* Set font color to green */
   }
   
   .storybook-input input::placeholder {
     color: #767676;
+    font-family: 'Goldman';
+  }
+
+  /* text color to #B6E72B */
+  .storybook-input input:focus {
+    color: #cdcdcd;
     font-family: 'Goldman';
   }
   
@@ -50,5 +57,6 @@
     margin: 0;
     padding: 0;
     border: none;
+    color: #B6E72B;
   }
   
