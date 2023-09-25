@@ -43,5 +43,5 @@ export const Header = ({ textButton, route, ...props }) => {
 
 Header.prototype = {
   textButton: PropTypes.string,
-  ruote: PropTypes.string,
+  route: PropTypes.string,
 };

@@ -1,0 +1,40 @@
+/* Estilos para el contenedor principal */
+.confirm-email-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Estilos para el mensaje de confirmación exitosa */
+  .confirmation-success {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #2ecc71; /* Color verde (puedes cambiarlo) */
+  }
+  
+  /* Estilos para el mensaje de carga */
+  .confirming-message {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+  
+  /* Estilos para el botón de solicitud de nuevo correo de confirmación */
+  .confirmation-button {
+    background-color: #3498db; /* Color azul (puedes cambiarlo) */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .confirmation-button:hover {
+    background-color: #2980b9; /* Color azul más oscuro al pasar el mouse (puedes cambiarlo) */
+  }
+  
