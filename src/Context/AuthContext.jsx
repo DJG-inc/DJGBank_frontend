@@ -55,19 +55,19 @@ export const AuthProvider = ({ children }) => {
         user_id: sanitizedUserid,
         password: sanitizedPassword,
       });
+      
       if (response.data.status === "Pending") {
         alert("Usuario pendiente de confirmación");
         window.location.reload();
         return;
-      }
-      if (response.data.status === "Confirmed") {
+      } else if (response.data.status === "Confirmed") {
         alert("Usuario pendiente de completar registro");
         navigate(`/complete-register/${response.data.id}`);
         return;
-      }
-      if (response.data.status === "Active") {
+      } else if (response.data.status === "Active") {
         navigate(`/`);
       }
+
       setUser(response.data);
       alert("Usuario logueado con éxito");
     } catch (error) {

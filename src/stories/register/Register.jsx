@@ -6,88 +6,74 @@ import { Button } from "../button/Button";
 import { useAuth } from "../../Context/AuthContext"; // Importa el hook useAuth
 
 export const Register = ({ text }) => {
-  const { register } = useAuth();
-
+  const { register } = useAuth(); // Usa el hook useAuth
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [idError, setIdError] = useState("");
-
-  const isIdValid = (id) => {
-    // Use this rregex "^[1-9][0-9]{7,9}$" to validate the id 
-    const idRegex = /^[1-9][0-9]{7,9}$/;
-    const isValid = idRegex.test(id);
-    if (!isValid) {
-      setIdError("El id debe contener entre 8 y 10 dígitos");
-    } else {
-      setIdError("");
-    }
-  };
-
-  const isEmailValid = (email) => {
-    const emailRegex = /^[A-Za-z0-9+_.-]+@(.+)$/;
-    const isValid = emailRegex.test(email);
-    if (!isValid) {
-      setEmailError("Correo electrónico no válido");
-    } else {
-      setEmailError("");
-    }
-    return isValid;
-  };
-
-  const isPasswordValid = (password) => {
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
-    const isValid = passwordRegex.test(password);
-    if (!isValid) {
-      setPasswordError(
-        "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial"
-      );
-    } else {
-      setPasswordError("");
-    }
-    return isValid;
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const isEmailValidValue = isEmailValid(email);
-    const isEmailValidValue = true;
-    // const isPasswordValidValue = isPasswordValid(password);
-    const isPasswordValidValue = true;
-    // const isIdValidValue = isIdValid(id);
-    const isIdValidValue = true;
-
-    if (
-      isEmailValidValue &&
-      isPasswordValidValue &&
-      isIdValidValue &&
-      password === confirmPassword
-    ) {
-      // Llama a la función de registro desde el contexto
-      await register(id, email, password);
-    } else {
-      // Muestra mensajes de error apropiados
-      if (!isIdValidValue) {
-        setIdError("El id debe contener entre 8 y 10 dígitos");
-        console.log(idError);
-      }
-      if (!isEmailValidValue) {
-        setEmailError("Correo electrónico no válido");
-        console.log(emailError);
-      }
-      if (!isPasswordValidValue) {
-        setPasswordError("Contraseña no válida");
-        console.log(passwordError);
-      }
-      if (password !== confirmPassword) {
-        setPasswordError("Las contraseñas no coinciden");
-        console.log(passwordError);
-      }
+    //verificar que los campos no esten vacios
+    if (id === "" || email === "" || password === "" || confirmPassword === "") {
+      alert("Todos los campos son obligatorios");
+      return;
     }
+
+    //verificar que el id sea numerico
+    if (isNaN(id)) {
+      alert("El id debe ser numerico");
+      return;
+    }
+
+    //verificar que el id tenga 10 digitos
+    if (id.length !== 10) {
+      alert("El id debe tener 10 digitos");
+      return;
+    }
+
+    //verificar que el email sea valido
+    const regex = /\S+@\S+\.\S+/;
+    if (!regex.test(email)) {
+      alert("El email no es valido");
+      return;
+    }
+
+    //verificar que el password tenga al menos 8 caracteres
+    if (password.length < 8) {
+      alert("El password debe tener al menos 8 caracteres");
+      return;
+    }
+
+    //verificar que el password tenga al menos una letra mayuscula
+    const regex2 = /[A-Z]/;
+    if (!regex2.test(password)) {
+      alert("El password debe tener al menos una letra mayuscula");
+      return;
+    }
+
+    //verificar que el password tenga al menos una letra minuscula
+    const regex3 = /[a-z]/;
+    if (!regex3.test(password)) {
+      alert("El password debe tener al menos una letra minuscula");
+      return;
+    }
+
+    //verificar que el password tenga al menos un numero
+    const regex4 = /[0-9]/;
+    if (!regex4.test(password)) {
+      alert("El password debe tener al menos un numero");
+      return;
+    }
+
+    //verificar que el password y la confirmacion sean iguales
+    if (password !== confirmPassword) {
+      alert("El password y la confirmacion deben ser iguales");
+      return;
+    }
+
+    await register(id, email, password);
   };
 
   return (
