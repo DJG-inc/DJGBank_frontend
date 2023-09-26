@@ -7,6 +7,7 @@ import { CompleteRegisterPage } from "./stories/CompleteRegisterPage/CompleteReg
 import "./App.css";
 import { AuthProvider } from "./Context/AuthContext";
 import { ConfirmEmail } from "./stories/ConfirmEmailPage/ConfirmEmail";
+import { HomePage } from "./stories/homePage/HomePage";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <Router>
         <AuthProvider>
         <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route

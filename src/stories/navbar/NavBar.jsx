@@ -3,34 +3,29 @@ import PropTypes from "prop-types";
 import "./navbar.css";
 import logo from "../assets/logo.svg";
 import { Button } from "../button/Button";
+import { useNavigate } from "react-router-dom";
 
-export const NavBar = ({ routes, ...props }) => {
+export const NavBar = ({ routes, handleRouteClick, ...props }) => {
+  const navigate = useNavigate();
   return (
     <div className={`storybook-navbar ${props.primary ? "primary" : ""}`}>
-      {/* 1. Coloca el logo primero */}
       <div className="navbar-logo">
         <img src={logo} alt="Logo" />
       </div>
-
-      {/* 2. Centra las rutas horizontalmente */}
       <div className="navbar-routes">
         {routes.map((route, index) => (
-          <div className="route" key={index}>
-            {/* 3. Aplica estilos de hover y subrayado */}
+          <div className="route" key={index} onClick={() => handleRouteClick(route.url)}>
             <span className="route-text">{route.label}</span>
           </div>
         ))}
       </div>
-
-      {/* 4. Coloca el botón en la parte derecha */}
       <div className="navbar-login">
-        <Button label="Login" primary={true} size={"medium"} />
+        <Button label="Login" primary={true} size={"medium"} onClick={() => navigate("/login")} />
       </div>
     </div>
   );
 };
 
-// Define las propTypes para el componente
 NavBar.propTypes = {
   routes: PropTypes.arrayOf(
     PropTypes.shape({
@@ -38,4 +33,5 @@ NavBar.propTypes = {
       label: PropTypes.string,
     })
   ),
+  handleRouteClick: PropTypes.func.isRequired, // Asegúrate de requerir la función de navegación
 };

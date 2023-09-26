@@ -1,0 +1,16 @@
+
+.info-box {
+    display: block; /* Cambia de flex a block */
+    text-align: left; /* Alinea el contenido a la izquierda */
+    padding: 20px; /* Agrega un poco de espacio alrededor del InfoBox */
+    width: 60rem; /* Define el ancho del InfoBox según tus necesidades */
+    max-width: 500rem; /* Define el ancho máximo del InfoBox */
+    /* colocar el info-box mas abajo */
+    margin-top: 6rem;
+    margin-left: 5rem;
+}
+
+.navbar-home {
+    flex: 0;
+    padding: 20px;
+}

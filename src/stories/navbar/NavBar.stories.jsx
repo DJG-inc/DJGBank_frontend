@@ -1,6 +1,6 @@
 // stories/Navbar.stories.js
 import { NavBar } from "./NavBar";
-
+ 
 export default {
   title: "Components/Navbar",
   component: NavBar,
