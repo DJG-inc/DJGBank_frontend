@@ -10,8 +10,9 @@ import { ConfirmEmail } from "./stories/ConfirmEmailPage/ConfirmEmail";
 
 function App() {
   return (
-    <AuthProvider>
+    
       <Router>
+        <AuthProvider>
         <Routes>
           <Route path="/" element={<h1>Home</h1>} />
           <Route path="/register" element={<RegisterPage />} />
@@ -22,8 +23,9 @@ function App() {
           />
           <Route path="/confirm-email/:token" element={<ConfirmEmail />} />
         </Routes>
+        </AuthProvider>
       </Router>
-    </AuthProvider>
+    
   );
 }
 

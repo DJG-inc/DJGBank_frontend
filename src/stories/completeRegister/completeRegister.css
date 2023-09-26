@@ -1,28 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
-
-
-.complete-register-container { 
+.complete-register-container {
     font-family: 'Goldman';
-    padding: 2rem; /* Agrega espacio interno al contenedor para crear un margen */
-    width: auto; /* Define el ancho del contenedor */
-    margin: 0 auto; /* Centra el contenedor horizontalmente en la pantalla */
-    /* Darle espacio entre que estan dentro  */
+    padding: 2rem;
+    width: auto;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 20px;
-}
-
-.complete-register-container h2 {
-    font-size: 2rem; /* Aumenta el tamaño de la fuente del título */
-    font-weight: bold; /* Hace que el título sea negrita */
-    margin-bottom: 1rem; /* Agrega espacio debajo del título */
-    color: white;
-    text-align: center;
-}
-
-/* Hacer los inputs más alargados */
-.complete-register-container Input {
+  }
+  
+  /* Agrega una nueva clase para los inputs */
+  .input-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Hacer los inputs más alargados */
+  .complete-register-container Input {
     width: 220%;
-}
+    max-width: 400px; /* Limita el ancho máximo de los inputs */
+  }
+
+  h2 {
+    font-family: 'Goldman';
+    font-size: 1.5rem;
+    color: #fff;
+    text-align: center;
+  }

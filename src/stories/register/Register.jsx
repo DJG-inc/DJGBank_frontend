@@ -8,11 +8,24 @@ import { useAuth } from "../../Context/AuthContext"; // Importa el hook useAuth
 export const Register = ({ text }) => {
   const { register } = useAuth();
 
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [idError, setIdError] = useState("");
+
+  const isIdValid = (id) => {
+    // Use this rregex "^[1-9][0-9]{7,9}$" to validate the id 
+    const idRegex = /^[1-9][0-9]{7,9}$/;
+    const isValid = idRegex.test(id);
+    if (!isValid) {
+      setIdError("El id debe contener entre 8 y 10 dígitos");
+    } else {
+      setIdError("");
+    }
+  };
 
   const isEmailValid = (email) => {
     const emailRegex = /^[A-Za-z0-9+_.-]+@(.+)$/;
@@ -45,16 +58,23 @@ export const Register = ({ text }) => {
     const isEmailValidValue = true;
     // const isPasswordValidValue = isPasswordValid(password);
     const isPasswordValidValue = true;
+    // const isIdValidValue = isIdValid(id);
+    const isIdValidValue = true;
 
     if (
       isEmailValidValue &&
       isPasswordValidValue &&
+      isIdValidValue &&
       password === confirmPassword
     ) {
       // Llama a la función de registro desde el contexto
-      await register(email, password);
+      await register(id, email, password);
     } else {
       // Muestra mensajes de error apropiados
+      if (!isIdValidValue) {
+        setIdError("El id debe contener entre 8 y 10 dígitos");
+        console.log(idError);
+      }
       if (!isEmailValidValue) {
         setEmailError("Correo electrónico no válido");
         console.log(emailError);
@@ -76,11 +96,18 @@ export const Register = ({ text }) => {
         <h2>{text}</h2>
         <Input
           primary={true}
+          type="text"
+          placeholder="Enter your id"
+          onChange={(e) => {
+            setId(e.target.value);
+          }}
+        />
+        <Input
+          primary={true}
           type="email"
           placeholder="Enter your email"
           onChange={(e) => {
             setEmail(e.target.value);
-            const isValid = isEmailValid(e.target.value);
           }}
         />
         <Input
@@ -89,7 +116,6 @@ export const Register = ({ text }) => {
           placeholder="Enter your password"
           onChange={(e) => {
             setPassword(e.target.value);
-            const isValid = isPasswordValid(e.target.value);
           }}
         />
         <Input

@@ -1,21 +1,26 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../Context/AuthContext"; // Importa el contexto de autenticación
+import { useAuth } from "../../Context/AuthContext";
 import { Button } from "../button/Button";
-import "./confirmEmail.css"; // Importa el archivo CSS que contiene los estilos
+import "./confirmEmail.css";
 import { useNavigate } from "react-router-dom";
 
 export const ConfirmEmail = () => {
   const { token } = useParams();
-  const { confirmEmail, isEmailConfirmed, user } = useAuth(); // Accede a la función confirmEmail y al estado isEmailConfirmed desde el contexto
+  const { confirmEmail, isEmailConfirmed, user } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    confirmEmail(token);
-    console.log(token);
-  }, [confirmEmail, token]);
+  // Decodifica el token en Base64
+  const decodedToken = atob(token);
 
-  const handleRequestNewConfirmation = () => {
+  useEffect(() => {
+    confirmEmail(decodedToken); // Utiliza el token decodificado
+    console.log(decodedToken);
+  }, [confirmEmail, decodedToken]);
+
+  const handleRequestNewConfirmation = async (e) => {
+    e.preventDefault();
+    await confirmEmail(decodedToken); // Llama a la API para enviar una nueva confirmación
     alert("Se ha enviado un nuevo correo de confirmación");
   };
 
@@ -37,7 +42,6 @@ export const ConfirmEmail = () => {
           <p className="confirming-message">
             Confirmando el correo electrónico...
           </p>
-          {/* Puedes mostrar un mensaje de carga o animación */}
           <Button
             className="confirmation-button"
             label="Request new confirmation"
@@ -49,4 +53,4 @@ export const ConfirmEmail = () => {
       )}
     </div>
   );
-}
+};
