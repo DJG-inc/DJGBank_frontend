@@ -1,16 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
-.info-box {
-    display: block; /* Cambia de flex a block */
-    text-align: left; /* Alinea el contenido a la izquierda */
-    padding: 20px; /* Agrega un poco de espacio alrededor del InfoBox */
-    width: 60rem; /* Define el ancho del InfoBox según tus necesidades */
-    max-width: 500rem; /* Define el ancho máximo del InfoBox */
-    /* colocar el info-box mas abajo */
-    margin-top: 6rem;
-    margin-left: 5rem;
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
-.navbar-home {
-    flex: 0;
-    padding: 20px;
+img {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.page-container {
+  display: flex;
+  gap: 120px;
+}
+
+.page-content {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  background-color: #191a15;
+  height: calc(100vh - 100px);
+  padding: 50px;
+  overflow: hidden;
+}
+
+.info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.money-converter {
+  color: #ffff;
+  font-family: "Goldman";
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.money-converter__grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  /* grid-template-rows: 130px 130px; */
+}
+
+.monet-convert__container {
+  background-color: #202020;
+  padding: 40px;
+  position: relative;
+}
+
+.monet-convert__container::after {
+  content: "";
+  position: absolute;
+  height: 100px;
+  width: 200px;
+  background-color: rgb(25, 26, 21);
+  top: -45px;
+  right: -80px;
+  transform: rotate(45deg);
+}
+
+.monet-convert__header {
+  text-align: center;
+}
+
+.monet-convert__header h2 {
+  margin: 0;
+}
+
+.monet-convert__header span {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  color: #595959;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.money-converter__item {
+  border: 1px solid #fff;
+  padding: 20px;
+}
+
+.money-converter__item.value {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.money-converter__item.gray {
+  background-color: #1c1e15;
+}
+
+.value__convert {
+  font-size: 30px;
+}
+
+.money-convert__item__country {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.money-convert__item__container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.money-convert__item__image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: red;
+  overflow: hidden;
+}
+
+.money-converter__button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 13px 0;
+  background-color: #1d1f15;
+  border: none;
+  color: #bfe449;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+select {
+  font-family: "Goldman", sans-serif;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background-color: transparent;
+  color: #b6e72b;
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
 }

@@ -8,19 +8,31 @@ import { useNavigate } from "react-router-dom";
 export const NavBar = ({ routes, handleRouteClick, ...props }) => {
   const navigate = useNavigate();
   return (
-    <div className={`storybook-navbar ${props.primary ? "primary" : ""}`}>
+    <div
+      className={`storybook-navbar ${props.primary ? "primary" : ""}`}
+      style={{ backgroundColor: "#191A15" }}
+    >
       <div className="navbar-logo">
         <img src={logo} alt="Logo" />
       </div>
       <div className="navbar-routes">
         {routes.map((route, index) => (
-          <div className="route" key={index} onClick={() => handleRouteClick(route.url)}>
+          <div
+            className="route"
+            key={index}
+            onClick={() => handleRouteClick(route.url)}
+          >
             <span className="route-text">{route.label}</span>
           </div>
         ))}
       </div>
       <div className="navbar-login">
-        <Button label="Login" primary={true} size={"medium"} onClick={() => navigate("/login")} />
+        <Button
+          label="Login"
+          primary={true}
+          size={"medium"}
+          onClick={() => navigate("/login")}
+        />
       </div>
     </div>
   );
