@@ -289,7 +289,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const sanitizedPassword = DOMPurify.sanitize(password);
       const token = window.location.pathname.split("/")[2];
-      const response = await axios.post(`http://localhost:3000/api/user/restore-password/${token}`, {
+      const decodedToken = atob(token);
+      const response = await axios.post(`http://localhost:3000/api/user/restore-password/${decodedToken}`, {
         password: sanitizedPassword,
       });
       console.log(response.data);
