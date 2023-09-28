@@ -25,7 +25,7 @@
     padding: 6px;
     outline: none;
     background-color: transparent;
-    margin-left: 8px; /* Separación entre el icono y el input */
+    margin-left: auto; /* Separación entre el icono y el input */
     color: #cdcdcd; /* Set font color to green */
   }
   

@@ -5,9 +5,9 @@ article {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #191A15;
+  background: #191a15;
 }
- 
+
 /* Estilos para el encabezado (Header) */
 .header-register {
   flex: 0; /* Ocupa el espacio mínimo necesario */

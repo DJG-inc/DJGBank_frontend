@@ -1,35 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
 
 /* infoBox.css */
 .infobox {
-    font-family: 'Goldman';
-    padding: 5%;
-    border-radius: 4px;
-    width: 70%; /* Ancho fijo para el cuadro */
-    text-align: left;
-    background: linear-gradient(180deg, rgba(25, 26, 21, 0.10) 0%, rgba(189, 255, 6, 0) 100%);
-  }
-  
-  .infobox-title {
-    font-size: 90px; /* Hace que el título sea más grande */
-    font-weight: bold;
-    /* Agregar espacio abajo del título */
-    margin-bottom: 10px;
-    margin-top: 0%;
-    text-align: left;
-  }
-  
-  .infobox-message {
-    font-size: 30px; /* Ajusta el tamaño del mensaje */
-    margin-bottom: 40px; /* Espacio entre el mensaje y el botón */
-    font-weight: bold;
-    color: white;
-  }
-  
-  .infobox button {
-    padding: 15px 60px; /* Aumenta el tamaño del botón */
-    /* Aumenta el tamaño de la fuente del botón */
-    font-size: 20px;
-  }
-  
-  
+  font-family: "Goldman";
+  border-radius: 4px;
+  width: 70%; /* Ancho fijo para el cuadro */
+  text-align: left;
+  background: linear-gradient(
+    180deg,
+    rgba(25, 26, 21, 0.1) 0%,
+    rgba(189, 255, 6, 0) 100%
+  );
+}
+
+.infobox-title {
+  font-size: 90px; /* Hace que el título sea más grande */
+  font-weight: bold;
+  /* Agregar espacio abajo del título */
+  margin-bottom: 10px;
+  margin-top: 0%;
+  text-align: left;
+}
+
+.infobox-message {
+  font-size: 30px; /* Ajusta el tamaño del mensaje */
+  margin-bottom: 40px; /* Espacio entre el mensaje y el botón */
+  font-weight: bold;
+  color: white;
+}
+
+.infobox button {
+  padding: 15px 60px; /* Aumenta el tamaño del botón */
+  /* Aumenta el tamaño de la fuente del botón */
+  font-size: 20px;
+}

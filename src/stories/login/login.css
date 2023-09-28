@@ -25,3 +25,10 @@
 .login-container Input {
     width: 220%;
 }
+
+.forgot-password {
+    font-size: 0.8rem;
+    color: white;
+    text-decoration: none;
+    margin-top: 0.5rem;
+}

@@ -3,6 +3,7 @@ import "./completeRegister.css";
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
 import { useAuth } from "../../Context/AuthContext";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 export const CompleteRegister = ({ text }) => {
   const [date_of_birth, setDate_of_birth] = useState("");
@@ -17,19 +18,61 @@ export const CompleteRegister = ({ text }) => {
 
     //verificar que los campos no esten vacios
     if (first_name === "" || last_name === "" || date_of_birth === "" || address === "" || phone_number === "") {
-      alert("Todos los campos son obligatorios");
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "Todos los campos son obligatorios",
+        })
       return;
     }
 
     //verificar que el telefono sea numerico
     if (isNaN(phone_number)) {
-      alert("El telefono debe ser numerico");
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "El telefono debe ser numerico",
+        })
       return;
     }
 
     //verificar que el telefono tenga 10 digitos  
     if (phone_number.length !== 10) {
-      alert("El telefono debe tener 10 digitos");
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "El telefono debe tener 10 digitos",
+        })
       return;
     } 
 
@@ -42,7 +85,21 @@ export const CompleteRegister = ({ text }) => {
     const date_of_birth2 = new Date(newDate);
     const today = new Date();
     if (date_of_birth2 > today) {
-      alert("La fecha de nacimiento debe ser menor a la fecha actual");
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "La fecha de nacimiento debe ser menor a la fecha actual",
+        })
       return;
     }
 
@@ -52,28 +109,84 @@ export const CompleteRegister = ({ text }) => {
     const diff = today2 - birthDate;
     const age = Math.floor(diff / 31557600000);
     if (age < 18) {
-      alert("Debes ser mayor de edad para registrarte");
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "Debes ser mayor de 18 años",
+        })
       return;
     }
 
     //verificar que el nombre y apellido no contengan numeros
     const regex = /[0-9]/;
     if (regex.test(first_name) || regex.test(last_name)) {
-      alert("El nombre y apellido no deben contener numeros");
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "El nombre y apellido no deben contener numeros",
+        })
       return;
     }
 
     //verificar que el nombre y apellido no contengan caracteres especiales
     const regex2 = /[!@#$%^&*(),.?":{}|<>]/g;
     if (regex2.test(first_name) || regex2.test(last_name)) {
-      alert("El nombre y apellido no deben contener caracteres especiales");
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "El nombre y apellido no deben contener caracteres especiales",
+        })
       return;
     }
 
     //verificar que la direccion no contenga caracteres especiales
     const regex3 = /[!@$%^&*(),.?":{}|<>]/g;
     if (regex3.test(address)) {
-      alert("La direccion no debe contener caracteres especiales");
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "La direccion no debe contener caracteres especiales",
+        })
       return;
     }
 

@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 
 // Creamos el contexto de autenticación
@@ -29,8 +30,26 @@ export const AuthProvider = ({ children }) => {
       });
 
       setUser(response.data);
-      alert("Usuario registrado con éxito");
+      Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+      }).fire({
+        icon: 'success',
+        title: 'Usuario registrado con éxito'
+      })
+      navigate(`/login`);
     } catch (error) {
+      Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+      }).fire({
+        icon: 'error',
+        title: 'Error al registrar el usuario'
+      })
       console.error("Error al registrar el usuario:", error);
     }
   };
@@ -38,10 +57,24 @@ export const AuthProvider = ({ children }) => {
   const confirmEmail = async (token) => {
     try {
       const response = await axios.post(`http://localhost:3000/api/user/confirm-email/${token}`);
-      setUser(response.data);
-      alert("Correo electrónico confirmado con éxito");
-      navigate(`/login`);
+      if (response.data.status === "Confirmed") {
+        setUser(response.data);
+        navigate(`/login`);
+        Swal.fire({
+          icon: 'success',
+          title: 'Correo electrónico confirmado con éxito',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        return;
+      }
     } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al confirmar el correo electrónico',
+        showConfirmButton: false,
+        timer: 3000
+      });
       console.error("Error al confirmar el correo electrónico:", error);
     }
   };
@@ -57,21 +90,83 @@ export const AuthProvider = ({ children }) => {
       });
       
       if (response.data.status === "Pending") {
-        alert("Usuario pendiente de confirmación");
-        window.location.reload();
+        Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: false,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        })
+          .fire({ 
+            icon: "warning",
+            title: "Usuario pendiente de confirmación - Reenviando correo electrónico",
+          })
+          .then(async () => {
+            await axios.post(`http://localhost:3000/api/user/resend-email/${response.data.token}`);
+          });
         return;
       } else if (response.data.status === "Confirmed") {
-        alert("Usuario pendiente de completar registro");
-        navigate(`/complete-register/${response.data.id}`);
+        Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: false,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        })
+          .fire({
+            icon: "success",
+            title: "Usuario logueado con éxito - Complete su registro",
+          })
+          .then(() => {
+            navigate(`/complete-register/${response.data.id}`);
+          });
         return;
       } else if (response.data.status === "Active") {
-        navigate(`/`);
+        Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: false,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        })
+          .fire({
+            icon: "success",
+            title: "Usuario logueado con éxito",
+          })
+          .then(() => {
+            setUser(response.data);
+            navigate("/dashboard");
+          });
+        return; 
       }
-
-      setUser(response.data);
-      alert("Usuario logueado con éxito");
     } catch (error) {
-      alert("Usuario o contraseña incorrectos");
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "Usuario o contraseña incorrectos",
+        })
       console.error("Error al loguear el usuario:", error);
     }
   };
@@ -106,12 +201,134 @@ export const AuthProvider = ({ children }) => {
 
       setUser(response.data);
       console.log(response.data);
-      alert("Usuario registrado");
-      //recargar la pagina
-      window.location.reload();
-      // Redirige o realiza cualquier otra acción necesaria
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "success",
+          title: "Usuario completado su registro con éxito",
+        })
+        .then(() => {
+          navigate("/dashboard");
+        });
     } catch (error) { 
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "Error al completar el registro",
+        })
       console.error("Error al registrar el usuario:", error);
+    }
+  };
+
+  const forgotPassword = async (email) => {
+    try {
+      const sanitizedEmail = DOMPurify.sanitize(email);
+      const response = await axios.post("http://localhost:3000/api/user/forgot-password", {
+        email: sanitizedEmail,
+      });
+      console.log(response.data);
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "success",
+          title: "Correo electrónico enviado con éxito",
+        })
+        .then(() => {
+          navigate("/login");
+        });
+    } catch (error) {
+      console.error("Error al recuperar la contraseña:", error);
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "Error al recuperar la contraseña",
+        })
+      window.location.reload();
+    }
+  };
+
+  const restorePassword = async (password) => {
+    try {
+      const sanitizedPassword = DOMPurify.sanitize(password);
+      const token = window.location.pathname.split("/")[2];
+      const response = await axios.post(`http://localhost:3000/api/user/restore-password/${token}`, {
+        password: sanitizedPassword,
+      });
+      console.log(response.data);
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "success",
+          title: "Contraseña restaurada con éxito",
+        })
+        .then(() => {
+          navigate("/login");
+        });
+    } catch (error) {
+      console.error("Error al restaurar la contraseña:", error);
+      Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      })
+        .fire({
+          icon: "error",
+          title: "Error al restaurar la contraseña",
+        })
+      window.location.reload();
     }
   };
   
@@ -122,6 +339,8 @@ export const AuthProvider = ({ children }) => {
         confirmEmail,
         login,
         completeRegister,
+        forgotPassword,
+        restorePassword,
       }}
     >
       {children}

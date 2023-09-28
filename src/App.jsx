@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Importa BrowserRouter
 
 import { LoginPage } from "./stories/loginPage/LoginPage";
@@ -8,25 +7,25 @@ import "./App.css";
 import { AuthProvider } from "./Context/AuthContext";
 import { ConfirmEmail } from "./stories/ConfirmEmailPage/ConfirmEmail";
 import { HomePage } from "./stories/homePage/HomePage";
+import { Dashboard } from "./stories/Dashboard/Dashboard";
 
 function App() {
   return (
-    
-      <Router>
-        <AuthProvider>
+    <Router>
+      <AuthProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route
             path="/complete-register/:id"
             element={<CompleteRegisterPage />}
           />
           <Route path="/confirm-email/:token" element={<ConfirmEmail />} />
         </Routes>
-        </AuthProvider>
-      </Router>
-    
+      </AuthProvider>
+    </Router>
   );
 }
 
