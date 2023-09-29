@@ -12,25 +12,6 @@ export const Forgotpass = ({ text }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const regex = /\S+@\S+\.\S+/;
-    if (!regex.test(email)) {
-      Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: false,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-      })
-        .fire({
-          icon: "error",
-          title: "El email debe ser valido",
-        })
-      return;
-    }
     await forgotPassword(email);
   };
 

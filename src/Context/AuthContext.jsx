@@ -279,7 +279,7 @@ export const AuthProvider = ({ children }) => {
       })
         .fire({
           icon: "error",
-          title: "Error al recuperar la contraseña",
+          title: "Error el Email no existe en la base de datos",
         })
       window.location.reload();
     }
