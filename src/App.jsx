@@ -8,6 +8,8 @@ import { AuthProvider } from "./Context/AuthContext";
 import { ConfirmEmail } from "./stories/ConfirmEmailPage/ConfirmEmail";
 import { HomePage } from "./stories/homePage/HomePage";
 import { Dashboard } from "./stories/Dashboard/Dashboard";
+import { ForgotpassPage } from "./stories/forgotpassPage/ForgotpassPage";
+import { RestorePassword } from "./stories/restorePassword/RestorePassword";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             element={<CompleteRegisterPage />}
           />
           <Route path="/confirm-email/:token" element={<ConfirmEmail />} />
+          <Route path="/forgot-password" element={<ForgotpassPage />} />
+          <Route path="/reset-password/:token" element={<RestorePassword />} />
         </Routes>
       </AuthProvider>
     </Router>

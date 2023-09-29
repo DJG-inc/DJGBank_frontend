@@ -60,7 +60,7 @@ export const Login = ({ text }) => {
           }}
         />
         <div className="forgot-password">
-          <p>Forgot your password? <Link to="/forgotpass">Click here</Link></p>
+          <p>Forgot your password? <Link to="/forgot-password">Click here</Link></p>
         </div>
         <Button
           label="Login"
