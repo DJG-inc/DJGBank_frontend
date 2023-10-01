@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import "./completeRegister.css";
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
@@ -250,4 +251,8 @@ export const CompleteRegister = ({ text }) => {
       </div>
     </div>
   );
+};
+
+CompleteRegister.propTypes = {
+  text: PropTypes.string.isRequired,
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import "./login.css"; // Asegúrate de tener un archivo CSS correspondiente
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
@@ -71,4 +72,8 @@ export const Login = ({ text }) => {
       </div>
     </div>
   );
+};
+
+Login.propTypes = {
+  text: PropTypes.string.isRequired,
 };

@@ -1,5 +1,6 @@
 // Register.js
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import "./register.css";
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
@@ -248,4 +249,8 @@ export const Register = ({ text }) => {
       </div>
     </div>
   );
+};
+
+Register.propTypes = {
+  text: PropTypes.string.isRequired,
 };

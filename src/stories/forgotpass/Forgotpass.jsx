@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import "./forgotpass.css";
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
@@ -72,4 +73,8 @@ export const Forgotpass = ({ text }) => {
       </div>
     </div>
   );
+};
+
+Forgotpass.propTypes = {
+  text: PropTypes.string.isRequired,
 };
