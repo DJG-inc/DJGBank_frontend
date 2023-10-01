@@ -12,6 +12,42 @@ export const Forgotpass = ({ text }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (email === "") {
+      Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar:true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        },
+        icon:'error',
+        title: 'Please enter your email',
+      }).fire()
+      return;
+    }
+
+    const regEx = /\S+@\S+\.\S+/;
+    const validEmail = regEx.test(email);
+    if (!validEmail) {
+      Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar:true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        },
+        icon:'error',
+        title: 'Please enter a valid email',
+      }).fire()
+      return;
+    }
+
     await forgotPassword(email);
   };
 

@@ -8,10 +8,10 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 // Creamos el contexto de autenticación
 const AuthContext = createContext();
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+// Hook para acceder al contexto de autenticación
+export const useAuth = () => useContext(AuthContext);
 
+// Proveedor de autenticación
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
