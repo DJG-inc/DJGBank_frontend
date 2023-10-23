@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState} from "react";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,9 @@ export const useAuth = () => useContext(AuthContext);
 
 // Proveedor de autenticación
 export const AuthProvider = ({ children }) => {
+
   const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
  
   const register = async (id, email, password) => {
@@ -29,7 +31,6 @@ export const AuthProvider = ({ children }) => {
         password: sanitizedPassword,
       });
 
-      setUser(response.data);
       Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -58,7 +59,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(`http://localhost:3000/api/user/confirm-email/${token}`);
       if (response.data.status === "Confirmed") {
-        setUser(response.data);
         navigate(`/login`);
         Swal.fire({
           icon: 'success',
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
         user_id: sanitizedUserid,
         password: sanitizedPassword,
       });
-      
+
       if (response.data.status === "Pending") {
         Swal.mixin({
           toast: true,
@@ -130,6 +130,8 @@ export const AuthProvider = ({ children }) => {
           });
         return;
       } else if (response.data.status === "Active") {
+        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('id', response.data.id);
         Swal.mixin({
           toast: true,
           position: "top-end",
@@ -146,7 +148,6 @@ export const AuthProvider = ({ children }) => {
             title: "Usuario logueado con éxito",
           })
           .then(() => {
-            setUser(response.data);
             navigate("/dashboard");
           });
         return; 
@@ -169,6 +170,12 @@ export const AuthProvider = ({ children }) => {
         })
       console.error("Error al loguear el usuario:", error);
     }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('id');
+    navigate("/login");
   };
 
   const completeRegister = async ( first_name, last_name, date_of_birth, address, phone_number ) => {
@@ -199,8 +206,7 @@ export const AuthProvider = ({ children }) => {
         phone_number: sanitizedPhone_number,
       });
 
-      setUser(response.data);
-      console.log(response.data);
+    
       Swal.mixin({
         toast: true,
         position: "top-end",
@@ -338,6 +344,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         register,
         confirmEmail,
+        logout,
         login,
         completeRegister,
         forgotPassword,

@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Importa BrowserRouter
-
 import { LoginPage } from "./stories/loginPage/LoginPage";
 import { RegisterPage } from "./stories/registerPage/RegisterPage";
 import { CompleteRegisterPage } from "./stories/CompleteRegisterPage/CompleteRegisterPage"; // Importa CompleteRegisterPage
@@ -10,6 +9,7 @@ import { HomePage } from "./stories/homePage/HomePage";
 import { Dashboard } from "./stories/Dashboard/Dashboard";
 import { ForgotpassPage } from "./stories/forgotpassPage/ForgotpassPage";
 import { RestorePassword } from "./stories/restorePassword/RestorePassword";
+import { ProtectedRoute } from "./stories/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
@@ -19,7 +19,14 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="*"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/complete-register/:id"
             element={<CompleteRegisterPage />}
