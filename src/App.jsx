@@ -10,6 +10,7 @@ import { Dashboard } from "./stories/Dashboard/Dashboard";
 import { ForgotpassPage } from "./stories/forgotpassPage/ForgotpassPage";
 import { RestorePassword } from "./stories/restorePassword/RestorePassword";
 import { ProtectedRoute } from "./stories/ProtectedRoute/ProtectedRoute";
+import { DashProvider } from "./Context/DashContext";
 
 function App() {
   return (
@@ -19,14 +20,18 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+
           <Route
             path="*"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <DashProvider>
+                  <Dashboard />
+                </DashProvider>
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/complete-register/:id"
             element={<CompleteRegisterPage />}

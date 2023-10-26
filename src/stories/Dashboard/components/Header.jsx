@@ -1,15 +1,13 @@
+import logo from "../../assets/logo.svg";
+
 export const Header = () => {
   return (
     <header className="app-header">
       <div className="app-header-logo">
         <div className="logo">
           <span className="logo-icon">
-            <img src="https://assets.codepen.io/285131/almeria-logo.svg" />
+            <img src={logo} />
           </span>
-          <h1 className="logo-title">
-            <span>Almeria</span>
-            <span>NeoBank</span>
-          </h1>
         </div>
       </div>
       <div className="app-header-navigation">

@@ -18,7 +18,7 @@ const loadingPageStyles = {
 export const ProtectedRoute = ({ children }) => {
 
   // si no existe un token, redirecciona a la pagina de login
-  if (!localStorage.getItem("accessToken")) {
+  if (!sessionStorage.getItem("accessToken")) {
     return <Navigate to="/login" />;
   }
 

@@ -3,9 +3,14 @@ import { Navigation } from "./components/Navigation";
 import { Services } from "./components/Services";
 import { Sidebar } from "./components/Sidebar";
 import { Transfer } from "./components/Transfer";
+import { useDash } from "../../Context/DashContext";
 import "./dashboard.css";
 
 export const Dashboard = () => {
+  const { userData } = useDash();
+
+  console.log(userData);
+
   return (
     <>
       <div className="body-content">

@@ -14,8 +14,6 @@ export const useAuth = () => useContext(AuthContext);
 // Proveedor de autenticación
 export const AuthProvider = ({ children }) => {
 
-  const [user, setUser] = useState(null);
-
   const navigate = useNavigate();
  
   const register = async (id, email, password) => {
@@ -25,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       const sanitizedEmail = DOMPurify.sanitize(email);
       const sanitizedPassword = DOMPurify.sanitize(password);
 
-      const response = await axios.post("http://localhost:3000/api/user/register", {
+      await axios.post("http://localhost:3000/api/user/register", {
         user_id: sanitizedId,
         email: sanitizedEmail,
         password: sanitizedPassword,
@@ -130,8 +128,7 @@ export const AuthProvider = ({ children }) => {
           });
         return;
       } else if (response.data.status === "Active") {
-        localStorage.setItem('accessToken', response.data.token);
-        localStorage.setItem('id', response.data.id);
+        sessionStorage.setItem('accessToken', response.data.token);
         Swal.mixin({
           toast: true,
           position: "top-end",
@@ -173,8 +170,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('id');
+    sessionStorage.removeItem("accessToken");
     navigate("/login");
   };
 
@@ -198,7 +194,7 @@ export const AuthProvider = ({ children }) => {
       const newDate = day + "/" + month + "/" + year;
       const sanitizedDate_of_birth2 = DOMPurify.sanitize(newDate);
 
-      const response = await axios.post(`http://localhost:3000/api/user/complete-register/${id}`, {
+      await axios.post(`http://localhost:3000/api/user/complete-register/${id}`, {
         first_name: sanitizedFirst_name,
         last_name: sanitizedLast_name,
         date_of_birth: sanitizedDate_of_birth2,
