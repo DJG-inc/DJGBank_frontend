@@ -1,6 +1,6 @@
 import logo from "../../assets/logo.svg";
 
-export const Header = () => {
+export const Header = ({userName}) => {
   return (
     <header className="app-header">
       <div className="app-header-logo">
@@ -24,7 +24,7 @@ export const Header = () => {
       </div>
       <div className="app-header-actions">
         <button className="user-profile">
-          <span>Matheo Peterson</span>
+          <span>{userName}</span>
           <span>
             <img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
           </span>

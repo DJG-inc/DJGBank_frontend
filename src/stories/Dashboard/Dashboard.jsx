@@ -11,11 +11,15 @@ export const Dashboard = () => {
 
   console.log(userData);
 
+  if (userData === null) {
+    return <p>Cargando...</p>;
+  }
+
   return (
     <>
       <div className="body-content">
         <div className="app">
-          <Header />
+          <Header userName={userData.first_name + " " + userData.last_name} />
           <div className="app-body">
             <Navigation />
             <div className="app-body-main-content">
