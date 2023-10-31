@@ -79,7 +79,9 @@ export const HomePage = () => {
                     <div className="money-convert__item__image">
                       <img src={imageFrom} alt="icon-usa" />
                     </div>
-                    <span>USD</span>
+                    <span>
+                      {selectedCountry}
+                    </span>
                   </div>
                   <select
                     value={selectedCountry}
@@ -99,7 +101,9 @@ export const HomePage = () => {
                     <div className="money-convert__item__image">
                       <img src={imageTo} />
                     </div>
-                    <span>COL</span>
+                    <span>
+                      {selectedCountryTo}
+                    </span>
                   </div>
                   <select
                     value={selectedCountryTo}

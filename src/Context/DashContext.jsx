@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { useNavigate } from "react-router-dom";
 
 const DashContext = createContext();
 
@@ -8,6 +10,7 @@ export const useDash = () => useContext(DashContext);
 
 export const DashProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -26,19 +29,28 @@ export const DashProvider = ({ children }) => {
           const user = await getUser(id);
           setUserData(user);
         }
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Your session has expired, please login again',
+          showConfirmButton: false,
+          timer: 3000
+        }).then(() => {
+          navigate("/login");
+        })
+        sessionStorage.removeItem("accessToken");
       }
     }, 60000);
     return () => clearInterval(interval);
   }, []);
 
   const getUserIdFromToken = () => {
+    const token = sessionStorage.getItem("accessToken");
+    if (!token) {
+      return null;
+    }
     try {
-      const token = sessionStorage.getItem("accessToken");
-      if (!token) {
-        return null;
-      }
       const decodedToken = jwt_decode(token);
-      console.log("El token es: ", decodedToken);
       if (!decodedToken) {
         return null;
       }
@@ -48,15 +60,14 @@ export const DashProvider = ({ children }) => {
       return null;
     }
   };
-
+  
   const verifyExpiredToken = () => {
+    const token = sessionStorage.getItem("accessToken");
+    if (!token) {
+      return false;
+    }
     try {
-      const token = sessionStorage.getItem("accessToken");
-      if (!token) {
-        return false;
-      }
       const decodedToken = jwt_decode(token);
-      console.log(decodedToken);
       if (!decodedToken) {
         return false;
       }
