@@ -1,0 +1,24 @@
+/* Estilos para el contenedor principal */
+.container {
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  gap: 20px;
+}
+
+/* Estilos para los campos de entrada de números */
+/* Estilos para los campos de entrada de números */
+.input-verification {
+  width: 40px; /* Reduce el ancho de los campos de entrada */
+  height: 40px; /* Aumenta la altura de los campos de entrada para hacerlos cuadrados */
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  text-align: center; /* Centra el texto en el campo */
+  font-size: 1.5em; /* Aumenta el tamaño de la fuente */
+}

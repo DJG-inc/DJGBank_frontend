@@ -19,4 +19,4 @@ const getIP = async () => {
 
 const ipData = await getIP();
 
-export default ipData;
+export default { ip, ipData };

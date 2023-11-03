@@ -4,7 +4,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
-
 // Creamos el contexto de autenticación
 const AuthContext = createContext();
 
@@ -15,6 +14,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
+
  
   const register = async (id, email, password) => {
     try {
