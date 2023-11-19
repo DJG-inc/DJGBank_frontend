@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+import Swal from "sweetalert2/dist/sweetalert2.js";
 import { useNavigate } from "react-router-dom";
 
 const DashContext = createContext();
@@ -30,14 +30,14 @@ export const DashProvider = ({ children }) => {
           setUserData(user);
         }
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Your session has expired, please login again',
+          icon: "error",
+          title: "Oops...",
+          text: "Your session has expired, please login again",
           showConfirmButton: false,
-          timer: 3000
+          timer: 3000,
         }).then(() => {
           navigate("/login");
-        })
+        });
         sessionStorage.removeItem("accessToken");
       }
     }, 60000);
@@ -60,7 +60,7 @@ export const DashProvider = ({ children }) => {
       return null;
     }
   };
-  
+
   const verifyExpiredToken = () => {
     const token = sessionStorage.getItem("accessToken");
     if (!token) {
@@ -115,7 +115,7 @@ export const DashProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const createDebitCard = async (card_type) => {
     try {
@@ -124,7 +124,134 @@ export const DashProvider = ({ children }) => {
       const res = await axios.post(
         `http://localhost:3000/api/debitcard/create/${id}`,
         {
-          cardType: card_type 
+          cardType: card_type,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const createCreditCard = async (card_type) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const id = getUserIdFromToken();
+      const res = await axios.post(
+        `http://localhost:3000/api/creditcard/create/${id}`,
+        {
+          cardType: card_type,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const createTransaction = async (
+    user_id,
+    acc_number,
+    amount,
+    description
+  ) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const id = getUserIdFromToken();
+      const res = await axios.post(
+        `http://localhost:3000/api/transactions/create/${id}`,
+        {
+          user_id: user_id,
+          number_of_savings_account: acc_number,
+          amount: amount,
+          description: description,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const createCreditCardActivity = async (amount, type, cardId) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const res = await axios.post(
+        `http://localhost:3000/api/creditcardactivity/create/${cardId}`,
+        {
+          amount: amount,
+          type: type,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const cancelDebitCard = async (card_id) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const res = await axios.delete(
+        `http://localhost:3000/api/debitcard/delete/${card_id}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const cancelCreditCard = async (card_id) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const res = await axios.delete(
+        `http://localhost:3000/api/creditcard/delete/${card_id}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const createLoan = async (amount, description) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const id = getUserIdFromToken();
+      const res = await axios.post(
+        `http://localhost:3000/api/loans/create/${id}`,
+        {
+          amount: amount,
+          description: description,
         },
         {
           headers: {
@@ -138,75 +265,6 @@ export const DashProvider = ({ children }) => {
     }
   }
 
-  const createCreditCard = async (card_type) => {
-    try {
-      const token = sessionStorage.getItem("accessToken");
-      const id = getUserIdFromToken();
-      const res = await axios.post(
-        `http://localhost:3000/api/creditcard/create/${id}`,
-        {
-          cardType: card_type
-        },
-        {
-          headers: {
-            Authorization: token,
-          }
-        }
-      );
-      return res.data;
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const createTransaction = async (user_id, acc_number, amount, description) => {
-    try {
-      const token = sessionStorage.getItem("accessToken");
-      const id = getUserIdFromToken();
-      const res = await axios.post(
-        `http://localhost:3000/api/transactions/create/${id}`,
-        {
-          user_id: user_id,
-          number_of_savings_account: acc_number,
-          amount: amount,
-          description: description
-        },
-        {
-          headers: {
-            Authorization: token,
-          }
-        }
-      );
-      return res.data;
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const createCreditCardActivity = async (amount, type) => {
-    try {
-      const token = sessionStorage.getItem("accessToken");
-      const id = getUserIdFromToken();
-      const res = await axios.post(
-        `http://localhost:3000/api/creditcardactivity/create/${id}`,
-        {
-          amount: amount,
-          type: type
-        },
-        {
-          headers: {
-            Authorization: token,
-          }
-        }
-      );
-      return res.data;
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-
-
   return (
     <DashContext.Provider
       value={{
@@ -215,7 +273,9 @@ export const DashProvider = ({ children }) => {
         createDebitCard,
         createCreditCard,
         createTransaction,
-        createCreditCardActivity
+        createCreditCardActivity,
+        cancelDebitCard,
+        cancelCreditCard,
       }}
     >
       {children}
