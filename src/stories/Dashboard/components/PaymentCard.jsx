@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 
-import { React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import { useDash } from "../../../Context/DashContext";
+import { TransferMoneyForm, AdvanceMoneyForm, PayDebtForm } from "./Forms";
 import Swal from "sweetalert2";
 
 function formatDateStringForCard(dateStr) {
@@ -43,9 +44,12 @@ export const PaymentCard = ({
   cardName,
 }) => {
   // Inside your PaymentCard component
-  const { createTransaction, createCreditCardActivity } = useDash();
-
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
+  const {
+    createTransaction,
+    createCreditCardActivity,
+    cancelCreditCard,
+    cancelDebitCard,
+  } = useDash();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
@@ -60,78 +64,175 @@ export const PaymentCard = ({
     setModalContent(""); // Reset the modal content
   };
 
-  const handleCancelCard = () => {
+  const handleCancelCard = async () => {
     const confirmCancel = window.confirm(
       "Are you sure you want to cancel your card?"
     );
     if (confirmCancel) {
-      // Perform cancel card logic here
+    
+      if (cardName === "Credit") {
+        try {
+          const res = await cancelCreditCard(key);
+          if (res) {
+            await Swal.fire({
+              title: "Success",
+              text: "The card was cancelled successfully!",
+              icon: "success",
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            window.location.reload(); // Reload the page after the Swal alert
+          } else {
+            await Swal.fire(
+              "Error",
+              "There was an issue with the cancellation",
+              "error"
+            );
+          }
+        } catch (error) {
+          await Swal.fire(
+            "Error",
+            "There was an issue with the cancellation",
+            "error"
+          );
+        }
+      }
+
+      if (cardName === "Debit") {
+        try {
+          const res = await cancelDebitCard(key);
+          if (res) {
+            await Swal.fire({
+              title: "Success",
+              text: "The card was cancelled successfully!",
+              icon: "success",
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            window.location.reload(); // Reload the page after the Swal alert
+          } else {
+            await Swal.fire(
+              "Error",
+              "There was an issue with the cancellation",
+              "error"
+            );
+          }
+        } catch (error) {
+          await Swal.fire(
+            "Error",
+            "There was an issue with the cancellation",
+            "error"
+          );
+        }
+      }
+
       closeModal();
     }
   };
 
-const handleTransferConfirm = async (accountNumber, userId, amount) => {
-  const confirm = await Swal.fire({
-    title: "Confirm Transfer",
-    text: `Transfer $${amount} to account ${accountNumber}?`,
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonText: "Confirm",
-    cancelButtonText: "Cancel",
-  });
+  const handleTransferConfirm = async (accountNumber, userId, amount) => {
+    const confirm = await Swal.fire({
+      title: "Confirm Transfer",
+      text: `Transfer $${amount} to account ${accountNumber}?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel",
+    });
 
-  if (confirm.isConfirmed) {
-    try {
-      const transaction = await createTransaction(
-        userId,
-        accountNumber,
-        amount,
-        `Transfer to ${accountNumber} with id ${userId}`
-      );
-      if (transaction) {
-        await Swal.fire({
-          title: "Success",
-          text: "The transfer was successful!",
-          icon: "success",
-          timer: 2000,
-          timerProgressBar: true,
-        });
-        window.location.reload(); // Reload the page after the Swal alert
+    if (confirm.isConfirmed) {
+      try {
+        const transaction = await createTransaction(
+          userId,
+          accountNumber,
+          amount,
+          `Transfer to ${accountNumber} with id ${userId}`
+        );
+        if (transaction) {
+          await Swal.fire({
+            title: "Success",
+            text: "The transfer was successful!",
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          window.location.reload(); // Reload the page after the Swal alert
+        }
+      } catch (error) {
+        await Swal.fire(
+          "Error",
+          "There was an issue with the transaction",
+          "error"
+        );
       }
-    } catch (error) {
-      await Swal.fire("Error", "There was an issue with the transaction", "error");
     }
-  }
-};
+  };
 
-const handleAdvanceConfirm = async (amount) => {
-  const confirm = await Swal.fire({
-    title: "Confirm Advance",
-    text: `Advance $${amount} from your credit card?`,
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonText: "Confirm",
-    cancelButtonText: "Cancel",
-  });
+  const handleAdvanceConfirm = async (amount) => {
+    const confirm = await Swal.fire({
+      title: "Confirm Advance",
+      text: `Advance $${amount} from your credit card?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel",
+    });
 
-  if (confirm.isConfirmed) {
-    try {
-      const activity = await createCreditCardActivity(amount, "CASH_ADVANCE");
-      if (activity) {
-        await Swal.fire({
-          title: "Success",
-          text: "The advance was successful!",
-          icon: "success",
-          timer: 2000,
-          timerProgressBar: true,
-        });
-        window.location.reload(); // Reload the page after the Swal alert
+    if (confirm.isConfirmed) {
+      try {
+        const activity = await createCreditCardActivity(amount, "CASH_ADVANCE", key);
+        if (activity) {
+          await Swal.fire({
+            title: "Success",
+            text: "The advance was successful!",
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          window.location.reload(); // Reload the page after the Swal alert
+        }
+      } catch (error) {
+        await Swal.fire(
+          "Error",
+          "There was an issue with the advance",
+          "error"
+        );
       }
-    } catch (error) {
-      await Swal.fire("Error", "There was an issue with the advance", "error");
     }
-  }
-};
+  };
+
+  const handlePayConfirm = async (amount) => {
+    const confirm = await Swal.fire({
+      title: "Confirm Payment",
+      text: `Pay $${amount} from your credit card?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel",
+    });
+
+    if (confirm.isConfirmed) {
+      try {
+        const activity = await createCreditCardActivity(amount, "PAYMENT", key);
+        if (activity) {
+          await Swal.fire({
+            title: "Success",
+            text: "The payment was successful!",
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          window.location.reload(); // Reload the page after the Swal alert
+        }
+      } catch (error) {
+        await Swal.fire(
+          "Error",
+          "There was an issue with the payment",
+          "error"
+        );
+      }
+    }
+  };
 
   return (
     <div className="payment">
@@ -212,7 +313,9 @@ const handleAdvanceConfirm = async (amount) => {
                 onCancel={closeModal}
               />
             )}
-            {/* Add other modal content as needed */}
+            {modalContent === "pay" && (
+              <PayDebtForm onConfirm={handlePayConfirm} onCancel={closeModal} />
+            )}
           </div>
         </div>
       )}
@@ -267,71 +370,4 @@ const handleAdvanceConfirm = async (amount) => {
       )}
     </div>
   );
-};
-
-// Transfer Money Form Component
-const TransferMoneyForm = ({ onConfirm, onCancel }) => {
-  const [accountNumber, setAccountNumber] = useState("");
-  const [userId, setUserId] = useState("");
-  const [amount, setAmount] = useState("");
-
-  return (
-    <div className="transfer-money-form">
-      <h3>Transfer Money</h3>
-      <input
-        type="text"
-        placeholder="Account Number"
-        value={accountNumber}
-        onChange={(e) => setAccountNumber(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="User ID"
-        value={userId}
-        onChange={(e) => setUserId(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <button
-        className="confirm-button"
-        onClick={() => onConfirm(accountNumber, userId, amount)}
-      >
-        Confirm Transfer
-      </button>
-      <button className="cancel-button" onClick={onCancel}>
-        Cancel
-      </button>
-    </div>
-  );
-};
-
-// Advance Money Form Component
-const AdvanceMoneyForm = ({ onConfirm, onCancel }) => {
-  const [amount, setAmount] = useState("");
-
-  return (
-    <div className="advance-money-form">
-      <h3>Advance Money</h3>
-      <input
-        type="number"
-        placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <button className="confirm-button" onClick={() => onConfirm(amount)}>
-        Confirm Advance
-      </button>
-      <button className="cancel-button" onClick={onCancel}>
-        Cancel
-      </button>
-    </div>
-  );
-};
-
-const PayDebtForm = ({ onConfirm, onCancel }) => {
-
 };

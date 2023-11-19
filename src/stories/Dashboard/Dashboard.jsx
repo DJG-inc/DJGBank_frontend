@@ -24,7 +24,9 @@ export const Dashboard = () => {
             <Navigation />
             <div className="app-body-main-content">
               {/* <Services /> */}
-              <Transfer />
+              <Transfer
+                userData={userData}
+              />
             </div>
             <Sidebar
               userData={userData}

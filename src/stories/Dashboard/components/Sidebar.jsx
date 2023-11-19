@@ -74,13 +74,13 @@ export const Sidebar = ({ userData }) => {
           {account !== null &&
             account.debit_cards.map((card) => (
               <PaymentCard
-                // If card type is visa color is set blue, if not color is set red
                 color={card.card_type === "Visa" ? "blue" : "red"}
                 cardType={card.card_type}
                 cardNumber={card.card_number}
                 expiryDate={card.expiry_date}
                 balance={savingsAccBalance}
                 cardName="Debit"
+                key={card.id}
               />
             ))}
 
@@ -94,6 +94,7 @@ export const Sidebar = ({ userData }) => {
                 expiryDate={card.expiry_date}
                 balance={card.current_debt}
                 cardName="Credit"
+                key={card.id}
               />
             ))}
           {/* If the user has no cards show a message */}
