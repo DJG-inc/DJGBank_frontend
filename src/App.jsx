@@ -11,6 +11,7 @@ import { ForgotpassPage } from "./stories/forgotpassPage/ForgotpassPage";
 import { RestorePassword } from "./stories/restorePassword/RestorePassword";
 import { ProtectedRoute } from "./stories/ProtectedRoute/ProtectedRoute";
 import { DashProvider } from "./Context/DashContext";
+import { VerificationPage } from "./stories/VerificationPage/verificationPage";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/confirm-email/:token" element={<ConfirmEmail />} />
           <Route path="/forgot-password" element={<ForgotpassPage />} />
           <Route path="/reset-password/:token" element={<RestorePassword />} />
+          <Route path="/verifyCode/:id/:verification_code" element={<VerificationPage />} />
         </Routes>
       </AuthProvider>
     </Router>

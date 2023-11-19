@@ -4,8 +4,6 @@ async function getIPAddress() {
   return data.ip;
 }
 
-getIPAddress().then((ip) => console.log(ip));
-
 const ip = await getIPAddress();
 const token = "3aafd0fa14f59d";
 
@@ -19,4 +17,7 @@ const getIP = async () => {
 
 const ipData = await getIP();
 
-export default { ip, ipData };
+export const ipInfo = {
+  ip,
+  ipData
+};

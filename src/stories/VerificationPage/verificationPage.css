@@ -1,0 +1,31 @@
+/* /* En tu archivo page.css */
+
+/* Establece el tamaño del artículo (Page) para que ocupe la pantalla completa */
+article {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #191a15;
+  }
+  
+  /* Estilos para el encabezado (Header) */
+  .header-verif {
+    flex: 0; /* Ocupa el espacio mínimo necesario */
+    padding: 20px; /* Añade espacio de relleno */
+  }
+  
+  /* Estilos para la sección de registro (Register) */
+  .verification-box {
+    flex: 1; /* Ocupa todo el espacio disponible restante */
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    color: #fff;
+  }
+  
+  /* Estilos para hacer el registro más grande */
+  .verification-page {
+    width: 80%; /* Ajusta el ancho según tus necesidades */
+    max-width: 500px; /* Limita el ancho máximo */
+  }
+  

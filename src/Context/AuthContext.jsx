@@ -3,6 +3,7 @@ import DOMPurify from "dompurify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { ipInfo } from "../assets/ipadress"
 
 // Creamos el contexto de autenticación
 const AuthContext = createContext();
@@ -23,10 +24,16 @@ export const AuthProvider = ({ children }) => {
       const sanitizedEmail = DOMPurify.sanitize(email);
       const sanitizedPassword = DOMPurify.sanitize(password);
 
-      await axios.post("http://localhost:3000/api/user/register", {
+      const response = await axios.post("http://localhost:3000/api/user/register", {
         user_id: sanitizedId,
         email: sanitizedEmail,
         password: sanitizedPassword,
+      });
+
+      const user_id = response.data.id;
+      
+      await axios.post(`http://localhost:3000/api/ipadress/registerIp/${user_id}`, {
+        ip: ipInfo.ip,
       });
 
       Swal.mixin({
@@ -82,32 +89,89 @@ export const AuthProvider = ({ children }) => {
       const sanitizedUserid = DOMPurify.sanitize(userid);
       const sanitizedPassword = DOMPurify.sanitize(password);
 
-      const response = await axios.post("http://localhost:3000/api/user/login", {
-        user_id: sanitizedUserid,
-        password: sanitizedPassword,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/user/login",
+        {
+          user_id: sanitizedUserid,
+          password: sanitizedPassword,
+        }
+      );
 
-      if (response.data.status === "Pending") {
-        Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: false,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        })
-          .fire({ 
-            icon: "warning",
-            title: "Usuario pendiente de confirmación - Reenviando correo electrónico",
+      try{
+        await axios.post(
+          `http://localhost:3000/api/ipadress/verifyIp/${response.data.id}`,
+          {
+            ip: ipInfo.ip,
+          }
+        );
+
+        if (response.data.status === "Pending") {
+          Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: false,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
           })
-          .then(async () => {
-            await axios.post(`http://localhost:3000/api/user/resend-email/${response.data.token}`);
-          });
-        return;
-      } else if (response.data.status === "Confirmed") {
+            .fire({
+              icon: "warning",
+              title:
+                "Usuario pendiente de confirmación - Reenviando correo electrónico",
+            })
+            .then(async () => {
+              await axios.post(
+                `http://localhost:3000/api/user/resend-email/${response.data.token}`
+              );
+            });
+          return;
+        } else if (response.data.status === "Confirmed") {
+          Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: false,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          })
+            .fire({
+              icon: "success",
+              title: "Usuario logueado con éxito - Complete su registro",
+            })
+            .then(() => {
+              navigate(`/complete-register/${response.data.id}`);
+            });
+          return;
+        } else if (response.data.status === "Active") {
+          sessionStorage.setItem("accessToken", response.data.token);
+          Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: false,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          })
+            .fire({
+              icon: "success",
+              title: "Usuario logueado con éxito",
+            })
+            .then(() => {
+              navigate("/dashboard");
+            });
+          return;
+        }
+
+      } catch (error) {
         Swal.mixin({
           toast: true,
           position: "top-end",
@@ -120,34 +184,14 @@ export const AuthProvider = ({ children }) => {
           },
         })
           .fire({
-            icon: "success",
-            title: "Usuario logueado con éxito - Complete su registro",
+            icon: "error",
+            title:
+              "Usuario no autorizado, se ha detectado un cambio de IP, te hemos enviado un correo electrónico para que puedas autorizar el cambio de IP",
           })
           .then(() => {
-            navigate(`/complete-register/${response.data.id}`);
+            navigate("/");
           });
         return;
-      } else if (response.data.status === "Active") {
-        sessionStorage.setItem('accessToken', response.data.token);
-        Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: false,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        })
-          .fire({
-            icon: "success",
-            title: "Usuario logueado con éxito",
-          })
-          .then(() => {
-            navigate("/dashboard");
-          });
-        return; 
       }
     } catch (error) {
       Swal.mixin({
@@ -160,11 +204,10 @@ export const AuthProvider = ({ children }) => {
           toast.addEventListener("mouseenter", Swal.stopTimer);
           toast.addEventListener("mouseleave", Swal.resumeTimer);
         },
-      })
-        .fire({
-          icon: "error",
-          title: "Usuario o contraseña incorrectos",
-        })
+      }).fire({
+        icon: "error",
+        title: "Usuario o contraseña incorrectos",
+      });
       console.error("Error al loguear el usuario:", error);
     }
   };
@@ -202,7 +245,6 @@ export const AuthProvider = ({ children }) => {
         phone_number: sanitizedPhone_number,
       });
 
-    
       Swal.mixin({
         toast: true,
         position: "top-end",
