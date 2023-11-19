@@ -85,6 +85,7 @@ export const DashProvider = ({ children }) => {
   const getUser = async () => {
     try {
       const token = sessionStorage.getItem("accessToken");
+      console.log(token);
       const id = getUserIdFromToken();
       const res = await axios.get(`http://localhost:3000/api/user/${id}`, {
         headers: {
@@ -97,10 +98,124 @@ export const DashProvider = ({ children }) => {
     }
   };
 
+  const createSavingsAccount = async () => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const id = getUserIdFromToken();
+      const res = await axios.post(
+        `http://localhost:3000/api/saving-accounts/create/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const createDebitCard = async (card_type) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const id = getUserIdFromToken();
+      const res = await axios.post(
+        `http://localhost:3000/api/debitcard/create/${id}`,
+        {
+          cardType: card_type 
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const createCreditCard = async (card_type) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const id = getUserIdFromToken();
+      const res = await axios.post(
+        `http://localhost:3000/api/creditcard/create/${id}`,
+        {
+          cardType: card_type
+        },
+        {
+          headers: {
+            Authorization: token,
+          }
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const createTransaction = async (user_id, acc_number, amount, description) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const id = getUserIdFromToken();
+      const res = await axios.post(
+        `http://localhost:3000/api/transactions/create/${id}`,
+        {
+          user_id: user_id,
+          number_of_savings_account: acc_number,
+          amount: amount,
+          description: description
+        },
+        {
+          headers: {
+            Authorization: token,
+          }
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const createCreditCardActivity = async (amount, type) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const id = getUserIdFromToken();
+      const res = await axios.post(
+        `http://localhost:3000/api/creditcardactivity/create/${id}`,
+        {
+          amount: amount,
+          type: type
+        },
+        {
+          headers: {
+            Authorization: token,
+          }
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+
   return (
     <DashContext.Provider
       value={{
         userData,
+        createSavingsAccount,
+        createDebitCard,
+        createCreditCard,
+        createTransaction,
+        createCreditCardActivity
       }}
     >
       {children}

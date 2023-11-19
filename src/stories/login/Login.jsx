@@ -10,6 +10,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 export const Login = ({ text }) => {
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
@@ -37,7 +38,31 @@ export const Login = ({ text }) => {
       })
       return;
     }
-    await login(userid, password);
+    try {
+      await login(userid, password);
+    } catch (error) {
+      Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        },
+        customClass: {
+          title: 'swal-title',
+          icon: 'swal-icon',
+          confirmButton: 'swal-button'
+        }
+      }).fire({
+        icon: 'error',
+        title: 'Invalid credentials'
+      })
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -64,10 +89,11 @@ export const Login = ({ text }) => {
           <p>Forgot your password? <Link to="/forgot-password">Click here</Link></p>
         </div>
         <Button
-          label="Login"
+          label={isLoading ? "Logging in..." : "Log in"}
           primary={true}
           size="medium"
           onClick={handleSubmit}
+          disabled={isLoading}
         />
       </div>
     </div>

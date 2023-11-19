@@ -11,21 +11,30 @@
   --c-gray-100: #ffffff;
   --c-green-500: #45ffbc;
   --c-olive-500: #e3ffa8;
+  --c-red-500: #ca362e; /* Example red color */
+  --c-blue-500: #1b70ba; 
   --c-white: var(--c-gray-100);
   --c-text-primary: var(--c-gray-100);
   --c-text-secondary: var(--c-gray-200);
   --c-text-tertiary: var(--c-gray-500);
 }
 
+:root {
+  /* ... your existing color variables ... */
+  --c-red-500: #ff4136; /* Example red color */
+  --c-blue-500: #0074d9; /* Example blue color */
+}
+
 .body-content {
   line-height: 1.5;
-  font-family: "Be Vietnam Pro", sans-serif;
+  /* font-family: "Be Vietnam Pro", sans-serif; */
   background-color: var(--c-gray-900);
   color: var(--c-text-primary);
   display: flex;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
 }
 
 *,
@@ -60,12 +69,12 @@ a {
 
 
 .app {
-  width: 100vw;
-  height: 100vh;
   background-color: var(--c-gray-800);
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  height: auto;
+  width: 100%;
+  padding: 0 2rem 2rem 2rem;
 }
 
 .app-header {
@@ -497,6 +506,29 @@ a {
   background-color: var(--c-gray-600);
 }
 
+.balance-label {
+  color: #808080;
+  height: auto;
+  width: 2rem;
+  font-size: x-small;
+}
+
+.cardmodal .close-button {
+  /* Position it at top left of the screen */
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  /* Style it */
+  background-color: transparent;
+  border: 0;
+  color: var(--c-gray-100);
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: 0.25s ease;
+}
+
 .mobile-only {
   display: none;
 }
@@ -557,6 +589,107 @@ a {
 .card.gray {
   background-color: var(--c-gray-300);
 }
+.card.red {
+  background-color: var(--c-red-500);
+}
+.card.blue {
+  background-color: var(--c-blue-500);
+}
+
+/* style the .cardmodal */
+.cardmodal {
+  position: fixed; /* Stay in place */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* Sit on top */
+  padding-top: 1rem; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */ 
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.62); /* Fallback color */
+}
+
+.cardmodal-content {
+  background-color: #5c5c5c97;
+  margin: auto;
+  padding: 20px;
+  width: 50%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;  
+  border-radius: 0.5rem;
+
+}
+
+.cardmodal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;  
+}
+
+.cardmodal-body-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.cardmodal-body-content-form-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cardmodal-body-content-form-input-brand {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.cardmodal-body-content-account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cardmodal-body-content-account h3 {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.delete-button {
+  border: 1px solid currentColor;
+  /* red color */
+  color: var(--c-red-500);
+  
+  border-radius: 6px;
+  padding: 0.75em 2.5em;
+  background-color: transparent;
+  transition: 0.25s ease;
+  cursor: pointer;
+}
+
+.delete-button:focus,
+.delete-button:hover {
+  background-color: var(--c-red-500);
+  color: var(--c-gray-900);
+}
+
+
 .card span:last-child {
   align-self: flex-end;
 }
@@ -584,6 +717,11 @@ a {
 }
 .payment-details div span {
   font-size: 1.5rem;
+}
+
+.card-type {
+  width: 2rem;
+  height: auto;
 }
 
 .filter-options {
@@ -783,7 +921,8 @@ a {
 
 .save-button {
   border: 1px solid currentColor;
-  color: var(--c-text-tertiary);
+  /* green color */
+  color: var(--c-green-500);
   border-radius: 6px;
   padding: 0.75em 2.5em;
   background-color: transparent;
@@ -792,7 +931,8 @@ a {
 }
 .save-button:focus,
 .save-button:hover {
-  color: var(--c-white);
+  background-color: var(--c-green-500);
+  color: var(--c-gray-900);
 }
 
 .settings-button {

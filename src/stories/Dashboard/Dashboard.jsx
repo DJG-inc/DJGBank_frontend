@@ -23,10 +23,12 @@ export const Dashboard = () => {
           <div className="app-body">
             <Navigation />
             <div className="app-body-main-content">
-              <Services />
+              {/* <Services /> */}
               <Transfer />
             </div>
-            <Sidebar />
+            <Sidebar
+              userData={userData}
+            />
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ export const Register = ({ text }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -200,8 +201,14 @@ export const Register = ({ text }) => {
         })
       return;
     }
-
-    await register(id, email, password);
+    setIsLoading(true);
+    try {
+      await register(id, email, password);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -241,10 +248,11 @@ export const Register = ({ text }) => {
           }}
         />
         <Button
-          label="Register"
+          label={isLoading ? "Registering..." : "Register"}
           primary={true}
           size="medium"
           onClick={handleSubmit}
+          disabled={isLoading}
         />
       </div>
     </div>
