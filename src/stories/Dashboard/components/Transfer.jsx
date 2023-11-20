@@ -1,10 +1,23 @@
-import { React, useState } from "react";
+import { React, useState, useEffect} from "react";
 import { ItemTransfer } from "./ItemTransfer";
 import { TransferMoneyForm } from "./Forms";
 
 export const Transfer = ({userData}) => {
-  const [transactions, setTransactions] = useState(userData.savings_account.transactions);
-  const [creditCards, setCreditCards] = useState(userData.credit_cards);
+  const [transactions, setTransactions] = useState([]);
+  const [creditCards, setCreditCards] = useState([]);
+
+  useEffect(() => {
+    if (userData.savings_account != null) {
+      setTransactions(userData.savings_account.transactions);
+    }
+    if (userData.credit_cards != null) {
+      setCreditCards(userData.credit_cards);
+    }
+  }
+  , [userData]);
+
+  console.log("transactions", transactions);
+  console.log("creditCards", creditCards);
   
 
   return (
@@ -12,10 +25,6 @@ export const Transfer = ({userData}) => {
       <div className="transfer-section-header">
         <h2>Transactions</h2>
         <div className="filter-options">
-          {/* <p>lol</p>
-          <button className="icon-button">
-            <i className="ph-plus"></i>
-          </button> */}
         </div>
       </div>
       <div className="transfers">
@@ -45,24 +54,8 @@ export const Transfer = ({userData}) => {
             />
           ))
         ))}
-
-        {/* if userData.savings_account == null we should put a message that says no savings account created yet, create one */}
-
-        {/* if userData.credit_cards == null we should put a message that says no credit cards created yet, create one */}
-
-        {/* if userData.savings_account.transactions == null we should put a message that says no transactions yet, make one */}
-
-        {/* if userData.credit_cards.credit_card_activity == null we should put a message that says no credit card activity yet, make one */}
-
-        {/* if userData.savings_account.transactions == null && userData.credit_cards.credit_card_activity == null we should put a message that says no activity yet, make one */}
-
-
         {userData.savings_account == null ? <p>No savings account created yet, create one</p> : null}
         {userData.credit_cards == null ? <p>No credit cards created yet, create one</p> : null}
-        
-
-
-        
       </div>
     </section>
   );

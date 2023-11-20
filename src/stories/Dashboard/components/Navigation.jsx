@@ -19,10 +19,6 @@ export const Navigation = () => {
           <span>Templates</span>
         </a>
         <a href="#">
-          <i className="ph-globe"></i>
-          <span>SWIFT</span>
-        </a>
-        <a href="#">
           <i className="ph-clipboard-text"></i>
           <span>Exchange</span>
         </a>

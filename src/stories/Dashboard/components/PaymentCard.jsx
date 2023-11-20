@@ -42,6 +42,7 @@ export const PaymentCard = ({
   balance,
   cardType,
   cardName,
+  cardId
 }) => {
   // Inside your PaymentCard component
   const {
@@ -65,14 +66,19 @@ export const PaymentCard = ({
   };
 
   const handleCancelCard = async () => {
-    const confirmCancel = window.confirm(
-      "Are you sure you want to cancel your card?"
-    );
+    const confirmCancel = await Swal.fire({
+      title: "Cancel Card",
+      text: `Do you want to cancel this card?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel",
+    });
     if (confirmCancel) {
     
       if (cardName === "Credit") {
         try {
-          const res = await cancelCreditCard(key);
+          const res = await cancelCreditCard(cardId);
           if (res) {
             await Swal.fire({
               title: "Success",
@@ -100,7 +106,7 @@ export const PaymentCard = ({
 
       if (cardName === "Debit") {
         try {
-          const res = await cancelDebitCard(key);
+          const res = await cancelDebitCard(cardId);
           if (res) {
             await Swal.fire({
               title: "Success",
@@ -180,7 +186,7 @@ export const PaymentCard = ({
 
     if (confirm.isConfirmed) {
       try {
-        const activity = await createCreditCardActivity(amount, "CASH_ADVANCE", key);
+        const activity = await createCreditCardActivity(amount, "CASH_ADVANCE", cardId);
         if (activity) {
           await Swal.fire({
             title: "Success",
@@ -192,6 +198,7 @@ export const PaymentCard = ({
           window.location.reload(); // Reload the page after the Swal alert
         }
       } catch (error) {
+        console.log(error);
         await Swal.fire(
           "Error",
           "There was an issue with the advance",
@@ -213,7 +220,7 @@ export const PaymentCard = ({
 
     if (confirm.isConfirmed) {
       try {
-        const activity = await createCreditCardActivity(amount, "PAYMENT", key);
+        const activity = await createCreditCardActivity(amount, "PAYMENT", cardId);
         if (activity) {
           await Swal.fire({
             title: "Success",

@@ -80,6 +80,7 @@ export const Sidebar = ({ userData }) => {
                 expiryDate={card.expiry_date}
                 balance={savingsAccBalance}
                 cardName="Debit"
+                card={card.id}
                 key={card.id}
               />
             ))}
@@ -94,6 +95,7 @@ export const Sidebar = ({ userData }) => {
                 expiryDate={card.expiry_date}
                 balance={card.current_debt}
                 cardName="Credit"
+                cardId={card.id}
                 key={card.id}
               />
             ))}

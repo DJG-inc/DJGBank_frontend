@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500,
       }).fire({
         icon: 'success',
         title: 'Usuario registrado con éxito'
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500,
       }).fire({
         icon: 'error',
         title: 'Error al registrar el usuario'

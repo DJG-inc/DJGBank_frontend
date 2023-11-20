@@ -243,18 +243,45 @@ export const DashProvider = ({ children }) => {
     }
   };
 
-  const createLoan = async (amount, description) => {
+  const createLoan = async (amount, installments) => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const id = getUserIdFromToken();
+
+      const monthlyPayment = (amount / installments)
+
+
+      const res = await axios.post(
+        `http://localhost:3000/api/loan/create/${id}`,
+        {
+          amount: amount,
+          monthly_payment: monthlyPayment,
+          interest_rate: 0,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const payLoan = async (loanId) => {
     try {
       const token = sessionStorage.getItem("accessToken");
       const id = getUserIdFromToken();
       const res = await axios.post(
-        `http://localhost:3000/api/loans/create/${id}`,
-        {
-          amount: amount,
-          description: description,
-        },
+        `http://localhost:3000/api/loan/pay/${id}`,
+
+          loanId
+        ,
         {
           headers: {
+            "Content-Type": "application/json",
             Authorization: token,
           },
         }
@@ -276,6 +303,8 @@ export const DashProvider = ({ children }) => {
         createCreditCardActivity,
         cancelDebitCard,
         cancelCreditCard,
+        createLoan,
+        payLoan
       }}
     >
       {children}

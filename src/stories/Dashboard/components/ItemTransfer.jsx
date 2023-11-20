@@ -2,12 +2,9 @@
 import {React} from "react";
 
 
-export const ItemTransfer = ({ image, type, description, fourDigits, date, amount, card}) => {
+export const ItemTransfer = ({ type, description, fourDigits, date, amount, card}) => {
   return (
     <div className="transfer">
-      {/* <div className="transfer-logo">
-        <img src={image} />
-      </div> */}
       <dl className="transfer-details">
         <div>
           <dt>{type}</dt>

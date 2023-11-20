@@ -3,6 +3,7 @@ import { Navigation } from "./components/Navigation";
 import { Services } from "./components/Services";
 import { Sidebar } from "./components/Sidebar";
 import { Transfer } from "./components/Transfer";
+import { Loans } from "./components/Loans";
 import { useDash } from "../../Context/DashContext";
 import "./dashboard.css";
 
@@ -25,6 +26,9 @@ export const Dashboard = () => {
             <div className="app-body-main-content">
               {/* <Services /> */}
               <Transfer
+                userData={userData}
+              />
+              <Loans
                 userData={userData}
               />
             </div>
