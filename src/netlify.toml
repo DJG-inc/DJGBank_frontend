@@ -1,0 +1,7 @@
+# netlify.toml
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false # Ensures that files at the destination, if they exist, are served instead
