@@ -3,7 +3,7 @@ import DOMPurify from "dompurify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import { ipInfo } from "../assets/ipadress"
+import { getIPData } from "../assets/ipadress"
 
 // Creamos el contexto de autenticación
 const AuthContext = createContext();
@@ -13,6 +13,14 @@ export const useAuth = () => useContext(AuthContext);
 
 // Proveedor de autenticación
 export const AuthProvider = ({ children }) => {
+  const [ipInfo, setIpInfo] = useState({});
+  useEffect(() => {
+    const fetchIpInfo = async () => {
+      const ipInfo = await getIPData();
+      setIpInfo(ipInfo);
+    };
+    fetchIpInfo();
+  }, []);
 
   const navigate = useNavigate();
 

@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Button } from "../button/Button";
 import "./Verification.css";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import { ipInfo } from "../../assets/ipadress"
+import { getIPData } from "../../assets/ipadress"
 import { useNavigate } from "react-router-dom";
 
 export const Verification = ({ text }) => {
+  const [ipInfo, setIpInfo] = useState({});
+  useEffect(() => {
+    const fetchIpInfo = async () => {
+      const ipInfo = await getIPData();
+      setIpInfo(ipInfo);
+    };
+    fetchIpInfo();
+  }, []);
 
   const [inputValues, setInputValues] = useState(["", "", "", ""]);
   const navigate = useNavigate();
