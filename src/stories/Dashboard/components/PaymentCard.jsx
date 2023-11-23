@@ -52,6 +52,7 @@ export const PaymentCard = ({
     cancelDebitCard,
   } = useDash();
 
+  console.log("cardId", cardId);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 

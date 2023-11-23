@@ -10,11 +10,11 @@ import "./dashboard.css";
 export const Dashboard = () => {
   const { userData } = useDash();
 
-  console.log(userData);
 
   if (userData === null) {
     return <p>Cargando...</p>;
   }
+  console.log(userData);
 
   return (
     <>

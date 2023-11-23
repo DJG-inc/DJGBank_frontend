@@ -23,15 +23,6 @@ export const Navigation = () => {
           <span>Exchange</span>
         </a>
       </nav>
-      <footer className="footer">
-        <h1>
-          Almeria<small>©</small>
-        </h1>
-        <div>
-          Almeria ©<br />
-          All Rights Reserved 2021
-        </div>
-      </footer>
     </div>
   );
 };

@@ -12,6 +12,7 @@ export const Sidebar = ({ userData }) => {
   const [cardType, setCardType] = useState("credit");
   const [cardBrand, setCardBrand] = useState("Visa");
   const [cards, setCards] = useState([]);
+  
 
   console.log(userData);
 
@@ -28,30 +29,47 @@ export const Sidebar = ({ userData }) => {
     }
   };
 
-  const handleCreateCard = async () => {
-    let response;
-    if (cardType === "debit") {
-      response = await createDebitCard(cardBrand);
-    } else if (cardType === "credit") {
-      response = await createCreditCard(cardBrand);
+  const handleCreateDebitCard = async () => {
+    try {
+      const response = await createDebitCard(cardBrand);
+      console.log("response", response);
+      if (response) {
+        Swal.fire({
+          title: "Success!",
+          text: "Your debit card has been successfully created.",
+          icon: "success",
+          timer: 1500,
+          didClose: () => window.location.reload(),
+        });
+      } else {
+        console.log("Error while creating debit card");
+      }
+    } catch (err) {
+      console.log("Exception while creating debit card:", err);
     }
-
-    if (response) {
-      setCards([...cards, response]);
-      Swal.fire({
-        title: "Success!",
-        text: `Your ${cardType} card has been successfully created.`,
-        icon: "success",
-        timer: 1500,
-        didClose: () => window.location.reload(),
-      });
-    } else {
-      console.log("Error while creating card");
-    }
-
-    setToggleNewCard(!toggleNewCard);
+    setToggleNewCard(false); // Assuming you want to close the modal after the attempt
   };
-
+  
+  const handleCreateCreditCard = async () => {
+    try {
+      const response = await createCreditCard(cardBrand);
+      if (response) {
+        Swal.fire({
+          title: "Success!",
+          text: "Your credit card has been successfully created.",
+          icon: "success",
+          timer: 1500,
+          didClose: () => window.location.reload(),
+        });
+      } else {
+        console.log("Error while creating credit card");
+      }
+    } catch (err) {
+      console.log("Exception while creating credit card:", err);
+    }
+    setToggleNewCard(false); // Assuming you want to close the modal after the attempt
+  };
+  
   // Create a useeffect that is triggered everytime userData changes, the main purpose is to create a handle for each card creation and savingsaccount creation
   useEffect(() => {
     setAccount(userData.savings_account);
@@ -72,6 +90,7 @@ export const Sidebar = ({ userData }) => {
         <div className="payments">
           {/* For loop that iterates and creates cards for each debit card in account */}
           {account !== null &&
+            account.debit_cards != undefined &&
             account.debit_cards.map((card) => (
               <PaymentCard
                 color={card.card_type === "Visa" ? "blue" : "red"}
@@ -80,7 +99,7 @@ export const Sidebar = ({ userData }) => {
                 expiryDate={card.expiry_date}
                 balance={savingsAccBalance}
                 cardName="Debit"
-                card={card.id}
+                cardId={card.id}
                 key={card.id}
               />
             ))}
@@ -212,12 +231,21 @@ export const Sidebar = ({ userData }) => {
                             </div>
                           </div>
                           <div className="cardmodal-footer">
-                            <button
-                              className="save-button"
-                              onClick={handleCreateCard}
-                            >
-                              Create Card
-                            </button>
+                            {cardType === "debit" ? (
+                              <button
+                                className="save-button"
+                                onClick={handleCreateDebitCard}
+                              >
+                                Create Debit Card
+                              </button>
+                            ) : (
+                              <button
+                                className="save-button"
+                                onClick={handleCreateCreditCard}
+                              >
+                                Create Credit Card
+                              </button>
+                            )}
                           </div>
                         </div>
                       ))}
@@ -228,20 +256,52 @@ export const Sidebar = ({ userData }) => {
           )}
         </div>
         <div className="faq">
-          <p>Most frequently asked questions</p>
-          <div>
-            <label>Question</label>
-            <input type="text" placeholder="Type here" />
-          </div>
+          <p>Account Number</p>
         </div>
         <div className="payment-section-footer">
-          <button className="save-button">Save</button>
-          <button className="settings-button">
-            <i className="ph-gear"></i>
-            <span>More settings</span>
-          </button>
+          {account !== null ? (
+            <div className="account-info">
+              <CopyToClipboardButton textToCopy={account.account_number} />
+            </div>
+          ) : (
+            <div className="no-account">
+              <p>No savings account created yet</p>
+              <button
+                className="save-button"
+                onClick={handleCreateSavingAccount}
+                id="create-account-button"
+              >
+                Create an Account
+              </button>
+            </div>
+          )}
         </div>
       </section>
+    </div>
+  );
+};
+
+const CopyToClipboardButton = ({ textToCopy }) => {
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      // You can use SweetAlert2 or a custom alert to notify the user.
+      Swal.fire({
+        title: 'Copied!',
+        text: 'Text has been copied to clipboard',
+        icon: 'success',
+        timer: 1500
+      });
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      // Handle the error (e.g., display an error message)
+    }
+  };
+
+  return (
+    <div>
+      <input type="text" value={textToCopy} readOnly />
+      <button onClick={handleCopy}>Copy</button>
     </div>
   );
 };

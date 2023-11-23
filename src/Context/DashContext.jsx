@@ -87,7 +87,7 @@ export const DashProvider = ({ children }) => {
       const token = sessionStorage.getItem("accessToken");
       console.log(token);
       const id = getUserIdFromToken();
-      const res = await axios.get(`http://localhost:3000/api/user/${id}`, {
+      const res = await axios.get(`https://djgbank-backend-blue-meadow-1492.fly.dev/api/user/${id}`, {
         headers: {
           Authorization: token,
         },
@@ -103,7 +103,7 @@ export const DashProvider = ({ children }) => {
       const token = sessionStorage.getItem("accessToken");
       const id = getUserIdFromToken();
       const res = await axios.post(
-        `http://localhost:3000/api/saving-accounts/create/${id}`,
+        `https://djgbank-backend-blue-meadow-1492.fly.dev/api/saving-accounts/create/${id}`,
         {},
         {
           headers: {
@@ -122,7 +122,7 @@ export const DashProvider = ({ children }) => {
       const token = sessionStorage.getItem("accessToken");
       const id = getUserIdFromToken();
       const res = await axios.post(
-        `http://localhost:3000/api/debitcard/create/${id}`,
+        `https://djgbank-backend-blue-meadow-1492.fly.dev/api/debitcard/create/${id}`,
         {
           cardType: card_type,
         },
@@ -143,7 +143,7 @@ export const DashProvider = ({ children }) => {
       const token = sessionStorage.getItem("accessToken");
       const id = getUserIdFromToken();
       const res = await axios.post(
-        `http://localhost:3000/api/creditcard/create/${id}`,
+        `https://djgbank-backend-blue-meadow-1492.fly.dev/api/creditcard/create/${id}`,
         {
           cardType: card_type,
         },
@@ -156,6 +156,7 @@ export const DashProvider = ({ children }) => {
       return res.data;
     } catch (err) {
       console.log(err);
+      
     }
   };
 
@@ -169,7 +170,7 @@ export const DashProvider = ({ children }) => {
       const token = sessionStorage.getItem("accessToken");
       const id = getUserIdFromToken();
       const res = await axios.post(
-        `http://localhost:3000/api/transactions/create/${id}`,
+        `https://djgbank-backend-blue-meadow-1492.fly.dev/api/transactions/create/${id}`,
         {
           user_id: user_id,
           number_of_savings_account: acc_number,
@@ -192,7 +193,7 @@ export const DashProvider = ({ children }) => {
     try {
       const token = sessionStorage.getItem("accessToken");
       const res = await axios.post(
-        `http://localhost:3000/api/creditcardactivity/create/${cardId}`,
+        `https://djgbank-backend-blue-meadow-1492.fly.dev/api/creditcardactivity/create/${cardId}`,
         {
           amount: amount,
           type: type,
@@ -210,10 +211,11 @@ export const DashProvider = ({ children }) => {
   };
 
   const cancelDebitCard = async (card_id) => {
+    console.log(card_id);
     try {
       const token = sessionStorage.getItem("accessToken");
       const res = await axios.delete(
-        `http://localhost:3000/api/debitcard/delete/${card_id}`,
+        `https://djgbank-backend-blue-meadow-1492.fly.dev/api/debitcard/delete/${card_id}`,
         {
           headers: {
             Authorization: token,
@@ -230,7 +232,7 @@ export const DashProvider = ({ children }) => {
     try {
       const token = sessionStorage.getItem("accessToken");
       const res = await axios.delete(
-        `http://localhost:3000/api/creditcard/delete/${card_id}`,
+        `https://djgbank-backend-blue-meadow-1492.fly.dev/api/creditcard/delete/${card_id}`,
         {
           headers: {
             Authorization: token,
@@ -252,7 +254,7 @@ export const DashProvider = ({ children }) => {
 
 
       const res = await axios.post(
-        `http://localhost:3000/api/loan/create/${id}`,
+        `https://djgbank-backend-blue-meadow-1492.fly.dev/api/loan/create/${id}`,
         {
           amount: amount,
           monthly_payment: monthlyPayment,
@@ -275,7 +277,7 @@ export const DashProvider = ({ children }) => {
       const token = sessionStorage.getItem("accessToken");
       const id = getUserIdFromToken();
       const res = await axios.post(
-        `http://localhost:3000/api/loan/pay/${id}`,
+        `https://djgbank-backend-blue-meadow-1492.fly.dev/api/loan/pay/${id}`,
 
           loanId
         ,

@@ -22,8 +22,8 @@ export const Loans = ({ userData }) => {
 
   const handleLoanCreation = async (loanData) => {
     const confirm = await Swal.fire({
-      title: "Cancel Card",
-      text: `Do you want to cancel this card?`,
+      title: "Create Loan",
+      text: `Do you want to create this loan?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Confirm",
