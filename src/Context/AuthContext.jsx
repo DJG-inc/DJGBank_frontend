@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
       const sanitizedEmail = DOMPurify.sanitize(email);
       const sanitizedPassword = DOMPurify.sanitize(password);
 
-      const response = await axios.post("https://djgbank-backend-blue-meadow-1492.fly.dev/api/user/register", {
+      const response = await axios.post("https://djgbank-backend-blue-meadow-1492-icy-rain-603.fly.dev/api/user/register", {
         user_id: sanitizedId,
         email: sanitizedEmail,
         password: sanitizedPassword,
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
       const user_id = response.data.id;
       
-      await axios.post(`https://djgbank-backend-blue-meadow-1492.fly.dev/api/ipadress/registerIp/${user_id}`, {
+      await axios.post(`https://djgbank-backend-blue-meadow-1492-icy-rain-603.fly.dev/api/ipadress/registerIp/${user_id}`, {
         ip: ipInfo.ip,
       });
 
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
 
   const confirmEmail = async (token) => {
     try {
-      const response = await axios.post(`https://djgbank-backend-blue-meadow-1492.fly.dev/api/user/confirm-email/${token}`);
+      const response = await axios.post(`https://djgbank-backend-blue-meadow-1492-icy-rain-603.fly.dev/api/user/confirm-email/${token}`);
       if (response.data.status === "Confirmed") {
         navigate(`/login`);
         Swal.fire({
@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }) => {
       const sanitizedPassword = DOMPurify.sanitize(password);
 
       const response = await axios.post(
-        "https://djgbank-backend-blue-meadow-1492.fly.dev/api/user/login",
+        "https://djgbank-backend-blue-meadow-1492-icy-rain-603.fly.dev/api/user/login",
         {
           user_id: sanitizedUserid,
           password: sanitizedPassword,
@@ -101,7 +101,7 @@ export const AuthProvider = ({ children }) => {
 
       try{
         await axios.post(
-          `https://djgbank-backend-blue-meadow-1492.fly.dev/api/ipadress/verifyIp/${response.data.id}`,
+          `https://djgbank-backend-blue-meadow-1492-icy-rain-603.fly.dev/api/ipadress/verifyIp/${response.data.id}`,
           {
             ip: ipInfo.ip,
           }
@@ -126,7 +126,7 @@ export const AuthProvider = ({ children }) => {
             })
             .then(async () => {
               await axios.post(
-                `https://djgbank-backend-blue-meadow-1492.fly.dev/api/user/resend-email/${response.data.token}`
+                `https://djgbank-backend-blue-meadow-1492-icy-rain-603.fly.dev/api/user/resend-email/${response.data.token}`
               );
             });
           return;
@@ -239,7 +239,7 @@ export const AuthProvider = ({ children }) => {
       const newDate = day + "/" + month + "/" + year;
       const sanitizedDate_of_birth2 = DOMPurify.sanitize(newDate);
 
-      await axios.post(`https://djgbank-backend-blue-meadow-1492.fly.dev/api/user/complete-register/${id}`, {
+      await axios.post(`https://djgbank-backend-blue-meadow-1492-icy-rain-603.fly.dev/api/user/complete-register/${id}`, {
         first_name: sanitizedFirst_name,
         last_name: sanitizedLast_name,
         date_of_birth: sanitizedDate_of_birth2,
@@ -288,7 +288,7 @@ export const AuthProvider = ({ children }) => {
   const forgotPassword = async (email) => {
     try {
       const sanitizedEmail = DOMPurify.sanitize(email);
-      const response = await axios.post("https://djgbank-backend-blue-meadow-1492.fly.dev/api/user/forgot-password", {
+      const response = await axios.post("https://djgbank-backend-blue-meadow-1492-icy-rain-603.fly.dev/api/user/forgot-password", {
         email: sanitizedEmail,
       });
       console.log(response.data);
@@ -336,7 +336,7 @@ export const AuthProvider = ({ children }) => {
       const sanitizedPassword = DOMPurify.sanitize(password);
       const token = window.location.pathname.split("/")[2];
       const decodedToken = atob(token);
-      const response = await axios.post(`https://djgbank-backend-blue-meadow-1492.fly.dev/api/user/restore-password/${decodedToken}`, {
+      const response = await axios.post(`https://djgbank-backend-blue-meadow-1492-icy-rain-603.fly.dev/api/user/restore-password/${decodedToken}`, {
         password: sanitizedPassword,
       });
       console.log(response.data);
