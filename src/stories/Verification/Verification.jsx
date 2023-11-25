@@ -56,7 +56,7 @@ export const Verification = ({ text }) => {
     try {
 
       const response = await axios.post(
-        `http://localhost:8080/api/ipadress/verifyCode/${id}/${code.toUpperCase()}`,
+        `https://djgbank-backend.fly.dev/api/ipadress/verifyCode/${id}/${code.toUpperCase()}`,
         { 
           newIp: ipInfo.ip,
         }
